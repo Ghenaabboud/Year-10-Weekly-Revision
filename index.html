@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Year 10 Biology Weekly Revision</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="missions.css">
+<style>
+  h1.big{font-size:clamp(30px,5.5vw,44px);font-weight:800;margin-top:6px}
+  h2.mid{font-size:22px}
+  .two{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:start}
+  @media (max-width:760px){.two{grid-template-columns:1fr}}
+  .wrap.wider{max-width:960px}
+
+  /* how it works */
+  .how{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:how}
+  .how li{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .how li::before{counter-increment:how;content:counter(how);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--green);color:var(--green-ink);font:800 18px var(--f-display)}
+  .how b{display:block}
+  .how span{color:var(--muted);font-size:15px}
+  .rules{border-left:4px solid var(--red);background:var(--red-soft);border-radius:0 10px 10px 0;padding:12px 16px}
+  .rules b{color:var(--red)}
+  .rules ul{margin:6px 0 0;padding-left:18px}
+
+  /* pack list */
+  .weeklist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden}
+  .wk{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px 18px;border:0;border-top:1px solid var(--line);text-align:left;background:none;cursor:pointer;width:100%}
+  .wk:first-child{border-top:0}
+  .wk:hover{background:var(--green-soft)}
+  .wk[disabled]{cursor:default;opacity:.6}.wk[disabled]:hover{background:none}
+  .wk-num{font:800 20px var(--f-display);color:var(--green);width:42px;height:42px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex:none}
+  .wk.done{background:var(--green-soft)} .wk.done:hover{background:var(--green-soft);filter:brightness(.98)}
+  .wk.done .wk-num{background:var(--green);border-color:var(--green);color:var(--green-ink)}
+  .wk.latedone{background:var(--amber-soft)} .wk.latedone:hover{background:var(--amber-soft)}
+  .wk.latedone .wk-num{background:var(--amber);border-color:var(--amber);color:var(--card)}
+  .badge{display:inline-flex;gap:6px;align-items:center;background:var(--green);color:var(--green-ink);font:700 13px var(--f-body);padding:5px 12px;border-radius:999px;white-space:nowrap}
+  .badge.late{background:var(--amber);color:var(--card)}
+  .wk .score{display:block;font:700 13px var(--f-mono);color:var(--green);margin-top:3px}
+  .wk.latedone .score{color:var(--amber)}
+  .pbar{display:block;width:min(220px,100%);height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:8px}
+  .pbar i{display:block;height:100%;background:var(--amber)}
+  .ptext{display:block;font-size:13px;color:var(--amber);font-weight:700;margin-top:4px}
+  .allset{display:flex;gap:14px;align-items:center;background:var(--green);color:var(--green-ink);border-radius:12px;padding:14px 18px}
+  .allset .tick{font:800 30px var(--f-display);flex:none}
+  .allset .sub{font-size:14px;opacity:.92}
+  .step.full .dot{background:var(--green)!important;color:var(--green-ink)!important}
+  .step.full{border-color:var(--green);background:var(--green-soft)}
+  .wk h3{font-size:17px}
+  .wk .meta{font-size:13px;color:var(--muted)}
+  .wk .act{font-weight:700;color:var(--green);font-size:14px;white-space:nowrap}
+  @media (max-width:560px){.wk{grid-template-columns:auto 1fr}.wk .right{grid-column:2}}
+  .right{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+  @media (max-width:560px){.right{align-items:flex-start}}
+  .countdown{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--card);border:2px solid var(--green);border-radius:12px;padding:16px 18px}
+  .countdown .days{font:800 40px var(--f-display);color:var(--green);line-height:1;font-variant-numeric:tabular-nums}
+  .countdown .grow{flex:1;min-width:200px}
+
+  /* stepper */
+  .sticky{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+  .sticky-in{max-width:960px;margin:0 auto;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;gap:6px;align-items:center;overflow-x:auto}
+  .step{display:flex;gap:7px;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px 4px 4px;cursor:pointer;white-space:nowrap;font-size:14px;color:var(--ink)}
+  .step .dot{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;font:800 13px var(--f-display);background:var(--line);color:var(--ink)}
+  .step.R .dot{background:var(--cr);color:var(--card)}.step.A .dot{background:var(--ca);color:var(--card)}.step.B .dot{background:var(--cb);color:var(--card)}.step.C .dot{background:var(--cc);color:var(--card)}.step.D .dot{background:var(--cd);color:var(--card)}
+  .step[aria-current="step"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+  .step .n{font:500 12px var(--f-mono);color:var(--muted)}
+  .step.full .n{color:var(--green)}
+  .sep{flex:none;width:10px;height:2px;background:var(--line)}
+
+  .sec-head{display:flex;gap:14px;align-items:center}
+  .sec-head .crit{width:44px;height:44px;font-size:22px;border-radius:10px}
+  .guide{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .guide dt{font-weight:700;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+  .guide dd{margin:0}
+  @media (max-width:520px){.guide{grid-template-columns:1fr}.guide dd{margin-bottom:8px}}
+
+  .q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .q.missing{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+  .q-top{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .q-id{font:700 14px var(--f-mono);color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1px 8px}
+  .q-marks{font:700 13px var(--f-mono);color:var(--muted);white-space:nowrap}
+  .q-prompt{margin:0 0 10px;font-size:17px}
+  .q-prompt ul{margin:6px 0 0;padding-left:20px}
+  .how-to{font-size:14px;color:var(--blue);background:var(--blue-soft);border-radius:6px;padding:6px 10px;margin:0 0 10px;display:flex;gap:8px;align-items:baseline}
+  .how-to b{white-space:nowrap}
+  .term{font-size:14px;color:var(--muted);border-top:1px dashed var(--line);margin-top:12px;padding-top:8px}
+  .term b{color:var(--ink)}
+  .info{background:var(--green-soft);border-radius:10px;padding:14px 18px}
+  .info p{margin:6px 0}
+  .info::before{content:"Read this first";display:block;font:700 12px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:2px}
+  .opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;margin-top:8px;cursor:pointer}
+  .opt:has(input:checked){border-color:var(--green);background:var(--green-soft)}
+  .opt input{margin-top:5px;accent-color:var(--green);width:18px;height:18px}
+  textarea.input{min-height:130px;resize:vertical;line-height:1.5}
+  textarea.input.enough{border-color:var(--green)}
+  .wc{display:flex;align-items:center;gap:8px;margin-top:6px;font:500 12px var(--f-mono);color:var(--muted)}
+  .wc .bar2{flex:1;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+  .wc .bar2 i{display:block;height:100%;background:var(--amber)}
+  .wc.ok{color:var(--green)} .wc.ok .bar2 i{background:var(--green)}
+  .num{display:flex;gap:8px;align-items:center;max-width:220px}
+  .tbl select,.tbl input{width:100%;min-width:150px;border:1px solid var(--line);border-radius:6px;padding:7px 8px;background:var(--card)}
+  .navrow{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:18px}
+  .saved{font-size:13px;color:var(--muted)}
+
+  details.terms{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+  details.terms summary{cursor:pointer;font-weight:700}
+  .termlist{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin-top:10px;font-size:15px}
+  .termlist b{color:var(--green)}
+  .checklist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .checklist li{display:flex;gap:10px;align-items:flex-start}
+  .checklist li::before{content:"✓";color:var(--green);font-weight:800}
+  .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .type{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px}
+  .type b{display:block;font-size:15px}
+
+  .sumrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+  .sumrow:first-child{border-top:0}
+  .todo{margin:4px 0 0;padding-left:20px;color:var(--red);font-size:14px}
+  .confirm{border:2px solid var(--green);background:var(--green-soft)}
+
+  .score{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .score > b{font:800 46px var(--f-display);color:var(--green);font-variant-numeric:tabular-nums}
+  .mark{font:700 13px var(--f-mono);padding:2px 8px;border-radius:6px}
+  .mark.good{background:var(--green-soft);color:var(--green)}
+  .mark.bad{background:var(--red-soft);color:var(--red)}
+  .mark.self{background:var(--blue-soft);color:var(--blue)}
+  .yours{white-space:pre-wrap;border-left:3px solid var(--line);padding:6px 12px;margin:8px 0;color:var(--muted)}
+  .model{border-left:3px solid var(--green);padding:6px 12px;margin:8px 0}
+  .model ul{margin:6px 0 0;padding-left:18px}
+  .fb{font-size:14px;color:var(--muted);margin-top:6px}
+  .next{list-style:none;padding:0;margin:0;display:grid;gap:8px;counter-reset:nx}
+  .next li{display:grid;grid-template-columns:28px 1fr;gap:10px}
+  .next li::before{counter-increment:nx;content:counter(nx);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--green-soft);color:var(--green);font-weight:800}
+  .q-prompt,.info,.how-to,.term,.guide{-webkit-user-select:none;user-select:none}
+  .pledge{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--amber);background:var(--amber-soft);border-radius:10px;padding:14px 16px;cursor:pointer}
+  .pledge input{width:20px;height:20px;margin-top:3px;accent-color:var(--green);flex:none}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;max-width:min(560px,calc(100% - 32px));background:var(--ink);color:var(--paper);border-radius:10px;padding:12px 16px;font-size:15px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+  .watch{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+
+  .qhint{font-size:14px;background:var(--amber-soft);color:var(--ink);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:8px 12px;margin:0 0 10px}
+  .qhint b:first-child{color:var(--amber)}
+  /* recall missions */
+  .mission{display:flex;gap:14px;align-items:center;background:var(--cr);color:var(--card);border-radius:12px;padding:14px 18px;margin-top:10px}
+  .mission .mnum{flex:none;min-width:64px;padding:6px 8px;border-radius:10px;border:2px solid currentColor;text-align:center;font:700 10px/1.1 var(--f-body);letter-spacing:.08em;text-transform:uppercase}
+  .mission .mnum b{display:block;font:800 24px/1.1 var(--f-display);letter-spacing:0}
+  .mission h3{font-size:20px}
+  .mission .ml{font:700 12px var(--f-body);letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+  .mission p{margin:4px 0 0;font-size:15px;opacity:.95}
+  .flashes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+  .flashes .fh{grid-column:1/-1;font-size:14px;color:var(--muted)}
+  details.flash{background:var(--cr-soft);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  details.flash summary{cursor:pointer;font-weight:700;list-style:none}
+  details.flash summary::-webkit-details-marker{display:none}
+  details.flash summary::after{content:"Tap to check ↓";display:block;font:500 12px var(--f-mono);color:var(--cr);margin-top:6px}
+  details.flash[open] summary::after{content:"Answer ↓"}
+  details.flash div{margin-top:6px;font-size:15px}
+  .cloze{line-height:2.4;font-size:17px}
+  .cloze select{border:1px solid var(--line);border-radius:6px;padding:4px 6px;background:var(--card);font-size:15px;max-width:100%}
+  .cloze .ok{color:var(--green);font-weight:700}.cloze .no{color:var(--red);font-weight:700}
+  /* criterion D structure guide */
+  .dguide{border:2px solid var(--cd);border-radius:12px;background:var(--card);overflow:hidden}
+  .dguide-head{background:var(--cd);color:var(--card);padding:12px 18px}
+  .dguide-head h3{font-size:19px}
+  .dguide-head p{margin:4px 0 0;font-size:14px;opacity:.92}
+  .dsteps{list-style:none;margin:0;padding:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:ds}
+  .dsteps li{position:relative;border:1px solid var(--line);border-radius:10px;padding:14px 14px 12px;background:var(--paper);min-width:0}
+  .dsteps li::before{counter-increment:ds;content:counter(ds);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--cd);color:var(--card);font:800 15px var(--f-display);margin-bottom:8px}
+  .dsteps li:not(:last-child)::after{content:"→";position:absolute;right:-12px;top:18px;color:var(--cd);font-weight:800;font-size:18px}
+  .dsteps b{display:block;font-family:var(--f-display);font-size:16px}
+  .dsteps .strand{font:700 11px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .dsteps p{margin:6px 0;font-size:14px}
+  .dsteps .st{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px;margin-top:6px}
+  .dsteps .st i{display:block;color:var(--ink)}
+  .dfoot{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;padding:0 16px 16px}
+  .ladder{display:flex;flex-direction:column-reverse;gap:6px}
+  .rung{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;font-size:14px;border-radius:8px;padding:6px 10px;background:var(--paper)}
+  .rung span{font:800 14px var(--f-mono);text-align:center;border-radius:6px;padding:3px 0;background:var(--line)}
+  .rung.top{background:var(--green-soft)} .rung.top span{background:var(--green);color:var(--green-ink)}
+  .dfoot h4{margin:0 0 8px;font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .dcheck{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14px}
+  .dcheck li::before{content:"☐ ";color:var(--cd);font-weight:800}
+  @media (max-width:760px){.dsteps{grid-template-columns:1fr}.dsteps li:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-16px}.dfoot{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+  <div class="crest" aria-hidden="true">EIS</div>
+  <div><div class="bar-title">Year 10 Biology</div><div class="bar-sub">Weekly revision</div></div>
+  <div class="grow"></div>
+  <div class="who" id="who" hidden></div>
+</div></header>
+<div id="stickyMount"></div>
+<main class="wrap wider" id="app"></main>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="config.js"></script>
+<script src="weeks.js"></script>
+<script src="api.js"></script>
+<script src="sims.js"></script>
+<script>
+(function(){
+const W = window.REVISION_WEEKS, API = window.RevisionAPI;
+const PREVIEW = /[?&]preview\b/.test(location.search);
+const TEACHER = false; // true only in the teacher's private preview copy: unlocks every step and shows answers
+const app = document.getElementById("app"), who = document.getElementById("who"), stickyMount = document.getElementById("stickyMount");
+let S = { student:null, week:null, answers:{}, step:0, mode:"" };
+
+const TERMS = {
+  "state":"Give a short answer: a name, a value or a fact. No explanation needed.",
+  "identify":"Pick out the right answer from the possibilities, or name the feature briefly.",
+  "outline":"Give a brief summary of the main points.",
+  "describe":"Give a detailed account of what happens or what the pattern is. Use data if there is some.",
+  "explain":"Say what happens AND why it happens. Use “because” and “so”.",
+  "formulate":"Write it precisely and clearly, e.g. a research question that names both variables.",
+  "calculate":"Work out a number. Show your working and give units.",
+  "estimate":"Work out an approximate value from the data.",
+  "evaluate":"Weigh up strengths and limitations, then make a judgement.",
+  "discuss":"Give a balanced review: arguments for and against, backed by evidence, with a conclusion.",
+  "suggest":"Propose a sensible answer or solution.",
+  "predict":"Say what you expect to happen.",
+  "design":"Produce a plan or method someone else could follow.",
+  "justify":"Give reasons or evidence that support your answer."
+};
+const CRIT = {
+  R:{tests:"Quick recall of the key facts from the lessons, before you use them in exam-style questions.", tip:"Try each card from memory first, then tap it to check. Every question here is marked straight away."},
+  A:{tests:"What you know and understand: key facts, processes and scientific words from the lessons.", tip:"Look at the marks in brackets. [3] means make three separate points."},
+  B:{tests:"How you plan an investigation: research question, hypothesis, variables, method and safety.", tip:"Always name the independent variable, the dependent variable and how you will measure it, with units."},
+  C:{tests:"How you work with data: calculate, describe patterns, spot anomalies and judge the method.", tip:"Quote numbers from the data in your answer, with units."},
+  D:{tests:"How you use science to discuss a real-world issue and its effects on people.", tip:"Answer every bullet point, look at both sides, and finish with a clear conclusion."}
+};
+const HOWTO = {
+  mcq: "Choose one answer.",
+  match: "Choose an answer from each drop-down list.",
+  cloze: "Choose the correct word for each gap.",
+  num: "Type a number only. No units needed.",
+  numtable: "Type a number in each box, rounded to 1 decimal place.",
+  text: q => `Write at least ${q.minWords} words in full sentences. The bar turns green when you have written enough.`
+};
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const now = () => new Date();
+const fmt = d => new Date(d).toLocaleString("en-GB",{weekday:"long",day:"numeric",month:"long",hour:"numeric",minute:"2-digit",timeZone:"Asia/Dubai"});
+const fmtShort = d => new Date(d).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"Asia/Dubai"});
+const words = t => (String(t||"").trim().match(/[A-Za-z0-9°%.\-]+/g) || []).length;
+const num = v => { const n = parseFloat(String(v ?? "").replace(",", ".").trim()); return isFinite(n) ? n : null; };
+const ls = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch(e){ return null; } };
+const draftKey = () => "y10rev_draft_" + S.student.id + "_" + S.week.id;
+const items = week => week.sections.flatMap(s => s.items.filter(i => i.type !== "info").map(i => ({...i, crit:s.crit})));
+function MS(){ if (!S.ms) S.ms = Object.assign({cur:0, pred:{}, sim:{}, flip:{}, chk:{}, simdata:{}}, ls(draftKey()+"_m") || {}); return S.ms; }
+function saveMS(){ if (S.ms) ls(draftKey()+"_m", S.ms); }
+/* a question counts as done when answered; recall-mission questions must also have been checked */
+const ok = q => answered(q, S.answers[q.id]) && (q.crit !== "R" || !!MS().chk[q.id]);
+function labels(week){ const c = {}, out = {}; week.sections.forEach(s => s.items.forEach(i => { if(i.type==="info") return; c[s.crit]=(c[s.crit]||0)+1; out[i.id]=s.crit+c[s.crit]; })); return out; }
+function termsIn(html){ const found = []; (html.match(/<b>([^<]+)<\/b>/g)||[]).forEach(m => { m.replace(/<\/?b>/g,"").toLowerCase().split(/\s+and\s+/).forEach(t => { if (TERMS[t] && !found.includes(t)) found.push(t); }); }); return found; }
+
+
+function guideHTML(g){
+  return `<div class="dguide"><div class="dguide-head"><h3>${esc(g.title)}</h3><p>${esc(g.intro)}</p></div>
+    <ol class="dsteps">${g.steps.map(s=>`<li><span class="strand">${esc(s.strand)}</span><b>${esc(s.h)}</b><p>${esc(s.what)}</p><div class="st">Try starting with:${s.starters.map(x=>`<i>“${esc(x)}”</i>`).join("")}</div></li>`).join("")}</ol>
+    <div class="dfoot"><div><h4>How the levels are awarded</h4><div class="ladder">${g.ladder.map((r,i)=>`<div class="rung ${i===g.ladder.length-1?"top":""}"><span>${esc(r.lv)}</span><div><b>${esc(r.verb)}:</b> ${esc(r.d)}</div></div>`).join("")}</div></div>
+    <div><h4>Before you move on, check</h4><ul class="dcheck">${g.checklist.map(c=>`<li>${esc(c)}</li>`).join("")}</ul></div></div></div>`;
+}
+const infoHTML = q => q.guide ? guideHTML(q.guide)
+  : q.mission ? `<div class="mission"><div class="mnum">Mission<b>${q.mission.n}</b></div><div><div class="ml">${esc(q.mission.lesson)}</div><h3>${esc(q.mission.title)}</h3><p>${esc(q.mission.story)}</p></div></div>`
+  : (q.predict || q.sim) ? ""
+  : q.exam ? `<div class="info">${q.exam}</div>`
+  : q.flash ? `<div class="flashes"><div class="fh">Recall first: say the answer in your head, then tap the card to check.</div>${q.flash.map(f=>`<details class="flash"><summary>${esc(f.q)}</summary><div>${esc(f.a)}</div></details>`).join("")}</div>`
+  : `<div class="info">${q.html}</div>`;
+
+function answered(q, a){
+  if (q.type==="mcq") return Number.isInteger(a);
+  if (q.type==="match") return Array.isArray(a) && q.rows.every((_,i)=>a[i]);
+  if (q.type==="cloze") return Array.isArray(a) && q.blanks.every((_,i)=>a[i]);
+  if (q.type==="num") return num(a)!==null;
+  if (q.type==="numtable") return Array.isArray(a) && q.rows.every((_,i)=>num(a[i])!==null);
+  if (q.type==="text") return words(a) >= q.minWords;
+  return true;
+}
+function markOf(q, a){
+  if (q.type==="mcq") return a===q.answer ? q.marks : 0;
+  if (q.type==="match") return q.rows.reduce((t,r,i)=>t+((a||[])[i]===r.answer?1:0),0);
+  if (q.type==="cloze") return q.blanks.reduce((t,b,i)=>t+((a||[])[i]===b?1:0),0);
+  if (q.type==="num"){ const n=num(a); return n!==null && n>=q.min-1e-9 && n<=q.max+1e-9 ? q.marks : 0; }
+  if (q.type==="numtable") return q.rows.reduce((t,r,i)=>{const n=num((a||[])[i]);return t+(n!==null&&Math.abs(n-r.answer)<=r.tol+1e-9?1:0);},0);
+  return null;
+}
+function weekStatus(week){
+  const sub = (S.student.submissions||[]).find(s => s.week===week.id);
+  if (sub) return new Date(sub.ts) > new Date(week.due) ? {cls:"p-late",t:"Submitted late",act:"See your marks",sub} : {cls:"p-done",t:"Submitted",act:"See your marks",sub};
+  if (now() < new Date(week.opens)) return PREVIEW ? {cls:"p-open",t:"Preview (opens "+fmtShort(week.opens)+")",act:"Preview →"} : {cls:"p-wait",t:"Opens "+fmtShort(week.opens),locked:true};
+  const started = ls("y10rev_draft_"+S.student.id+"_"+week.id);
+  if (now() <= new Date(week.due)) return {cls:"p-open",t:"To do",act: started ? "Continue →" : "Start →"};
+  return {cls:"p-miss",t:"Overdue",act:"Do it now →"};
+}
+
+/* ---------- header ---------- */
+function setWho(){
+  if (!S.student){ who.hidden = true; return; }
+  who.hidden = false;
+  who.innerHTML = `<span>${esc(S.student.first)} ${esc(S.student.last||"")}</span><button id="logout">Sign out</button>`;
+  document.getElementById("logout").onclick = () => { S = {student:null,week:null,answers:{},step:0}; ls("y10rev_last_id", ""); renderLogin(); };
+}
+
+/* ---------- 1. sign in + how it works ---------- */
+function renderLogin(msg){
+  S.mode = "login"; stickyMount.innerHTML = ""; setWho();
+  app.innerHTML = `
+  <div class="stack" style="gap:26px">
+    <div><div class="eyebrow">Year 10 Biology · Unit 1: Cells</div><h1 class="big">Weekly revision packs</h1>
+      <p class="lead">One short pack every week to lock in what you learned in class and build your MYP exam skills. Each pack starts with recall missions on the week's lessons, then practises one criterion (A, B, C or D) in exam style.</p></div>
+    ${API.demo ? `<div class="demo-flag">Demo mode with sample students. Sign in with <b>D1003</b> to try a pack.</div>` : ""}
+    <div class="two">
+      <div class="stack">
+        <h2 class="mid">How it works</h2>
+        <ol class="how">
+          <li><div><b>Sign in with your student ID</b><span>It's the code at the start of your school email, for example M1234.</span></div></li>
+          <li><div><b>Open this week's pack</b><span>A new pack opens every Monday. It takes about 40 minutes.</span></div></li>
+          <li><div><b>Do the missions, then the exam questions</b><span>One step at a time. Your answers save on this device as you type, so you can stop and come back.</span></div></li>
+          <li><div><b>Submit before Sunday 11:59 pm</b><span>You can submit each pack once, so check your answers first.</span></div></li>
+          <li><div><b>Check your marks and the model answers</b><span>Correct your answers in a different colour in your book.</span></div></li>
+        </ol>
+      </div>
+      <div class="stack">
+        <form class="panel stack" id="loginForm" novalidate>
+          <h2 class="mid">Sign in</h2>
+          <label for="sid"><b>Student ID</b></label>
+          <input class="input mono" id="sid" autocomplete="off" spellcheck="false" placeholder="M0000" required>
+          <div class="err" id="loginErr">${esc(msg||"")}</div>
+          <div><button class="btn" id="loginBtn">Sign in</button></div>
+        </form>
+        <div class="rules"><b>The rules</b>
+          <ul><li>Every question must be answered before you can submit.</li><li>Written answers need a minimum number of words.</li><li>Pasting is turned off. The page records if you leave it to look things up, and your teacher can see this.</li><li>If a pack is not submitted by the deadline, an email goes home to your parents.</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById("loginForm").onsubmit = async e => {
+    e.preventDefault();
+    const id = document.getElementById("sid").value.trim();
+    if (!id) { document.getElementById("loginErr").textContent = "Type your student ID first."; return; }
+    const b = document.getElementById("loginBtn"); b.disabled = true; b.textContent = "Checking…";
+    try { S.student = await API.verify(id); ls("y10rev_last_id", S.student.id); renderWeeks(); }
+    catch(err){ document.getElementById("loginErr").textContent = err.message; b.disabled=false; b.textContent="Sign in"; }
+  };
+}
+
+/* ---------- 2. list of packs ---------- */
+function renderWeeks(){
+  S.mode = "list"; stickyMount.innerHTML = ""; setWho();
+  const current = W.find(w => { const st = weekStatus(w); return st.cls==="p-open"; });
+  const overdue = W.filter(w => weekStatus(w).cls==="p-miss");
+  let banner = "";
+  const doneAny = W.some(w => weekStatus(w).sub);
+  const upcoming = W.find(w => now() < new Date(w.opens));
+  if (!overdue.length && !current && doneAny) banner = `<div class="allset"><span class="tick" aria-hidden="true">✓</span><div><b>You're all caught up!</b><div class="sub">Every pack due so far is complete.${upcoming?` The next pack opens ${fmt(upcoming.opens).replace(/ at .*/,"")}.`:""}</div></div></div>`;
+  else if (overdue.length) banner = `<div class="countdown" style="border-color:var(--red)"><div class="days" style="color:var(--red)">${overdue.length}</div><div class="grow"><b>Overdue pack${overdue.length>1?"s":""}</b><div class="note">Submit ${overdue.length>1?"them":"it"} now. Late work still counts and stops a further email home.</div></div><button class="btn" data-w="${overdue[0].id}" style="background:var(--red);border-color:var(--red)">Do it now</button></div>`;
+  else if (current){
+    const ms = new Date(current.due) - now(), d = Math.floor(ms/864e5), h = Math.floor(ms/36e5);
+    banner = `<div class="countdown"><div class="days">${d>=1?d:h}</div><div class="grow"><b>${d>=1?(d===1?"day":"days"):(h===1?"hour":"hours")} left for this week's pack</b><div class="note">${esc(current.title)} · due ${fmt(current.due)}</div></div><button class="btn" data-w="${current.id}">${ls("y10rev_draft_"+S.student.id+"_"+current.id)?"Continue":"Start"} this week's pack</button></div>`;
+  }
+  const rows = W.map((w,i) => {
+    const st = weekStatus(w);
+    if (st.sub) {
+      const late = st.cls === "p-late";
+      return `<button class="wk ${late?"latedone":"done"}" data-w="${w.id}">
+        <span class="wk-num" aria-hidden="true">✓</span>
+        <span><h3>${esc(w.title)}</h3><span class="meta">${esc(w.lessons)} · submitted ${fmtShort(st.sub.ts)}</span>${st.sub.autoMax?`<span class="score">Auto-marked score: ${st.sub.auto}/${st.sub.autoMax}</span>`:""}</span>
+        <span class="right"><span class="badge ${late?"late":""}">✓ ${late?"Completed late":"Completed"}</span><span class="act">See your marks →</span></span></button>`;
+    }
+    let prog = "";
+    if (!st.locked) {
+      const d = ls("y10rev_draft_"+S.student.id+"_"+w.id) || {}, qs = items(w);
+      const n = qs.filter(q => answered(q, d[q.id])).length;
+      if (n > 0) prog = `<span class="pbar"><i style="width:${Math.round(n/qs.length*100)}%"></i></span><span class="ptext">In progress: ${n} of ${qs.length} answered${n===qs.length?". Ready to submit!":""}</span>`;
+    }
+    return `<button class="wk" data-w="${w.id}" ${st.locked?"disabled":""}>
+      <span class="wk-num">${i+1}</span>
+      <span><h3>${esc(w.title)}</h3><span class="meta">${esc(w.lessons)} · due ${fmtShort(w.due)}</span>${prog}</span>
+      <span class="right"><span class="pill ${st.cls}">${esc(st.t)}</span>${st.act?`<span class="act">${st.act}</span>`:""}</span></button>`;
+  }).join("");
+  app.innerHTML = `<div class="stack" style="gap:20px">
+    <div><div class="eyebrow">Welcome back</div><h1 class="big" style="font-size:clamp(28px,4.5vw,36px)">Hello ${esc(S.student.first)}</h1></div>
+    ${banner}
+    <h2 class="mid">All packs</h2>
+    <div class="weeklist">${rows}</div>
+  </div>`;
+  app.querySelectorAll("[data-w]").forEach(b => b.onclick = () => openWeek(W.find(w => w.id===b.dataset.w)));
+}
+
+function openWeek(w){
+  S.week = w;
+  const st = weekStatus(w);
+  if (st.sub) return renderResult(st.sub.answers || {}, st.sub.ts);
+  S.answers = ls(draftKey()) || {}; S.ms = null;
+  S.integ = Object.assign({left:0, away:0, paste:0, big:0, active:0, pledged:false}, ls(draftKey()+"_i") || {});
+  S.step = Object.keys(S.answers).length && S.integ.pledged ? 1 : 0;
+  syncProgress(true);
+  renderStep();
+}
+
+/* ---------- 3. pack: steps 0 = start, 1-4 = A-D, 5 = submit ---------- */
+function steps(){ return ["start", ...S.week.sections.map(s=>s.crit), "submit"]; }
+function stepper(){
+  const qs = items(S.week), st = steps();
+  const parts = st.map((k,i) => {
+    if (k==="start") return `<button class="step" data-step="${i}" ${S.step===i?'aria-current="step"':""}><span class="dot">i</span>Start</button>`;
+    if (k==="submit") { const all = qs.every(ok); return `<button class="step ${all?"full":""}" data-step="${i}" ${S.step===i?'aria-current="step"':""}><span class="dot">✓</span>Submit</button>`; }
+    const sq = qs.filter(q=>q.crit===k), d = sq.filter(ok).length;
+    const full = d===sq.length;
+    return `<button class="step ${k} ${full?"full":""}" data-step="${i}" ${S.step===i?'aria-current="step"':""}><span class="dot">${full?"✓":k}</span><span class="n">${full?k+" done":d+"/"+sq.length}</span></button>`;
+  });
+  stickyMount.innerHTML = `<div class="sticky"><div class="sticky-in" role="navigation" aria-label="Pack steps">${parts.join('<span class="sep"></span>')}</div></div>`;
+  stickyMount.querySelectorAll("[data-step]").forEach(b => b.onclick = () => { S.step = (S.integ.pledged || TEACHER) ? Number(b.dataset.step) : 0; renderStep(); });
+}
+
+function renderStep(){
+  S.mode = "week"; setWho(); stepper();
+  if (TEACHER) stickyMount.querySelector(".sticky-in").insertAdjacentHTML("beforeend", `<span class="teach-flag">Teacher view: all steps unlocked</span>`);
+  const k = steps()[S.step];
+  if (k==="start") renderStart(); else if (k==="submit") renderSubmit(); else if (k==="R") renderMissions(S.week.sections.find(s=>s.crit===k)); else renderSection(S.week.sections.find(s=>s.crit===k));
+  window.scrollTo(0,0);
+}
+
+function renderStart(){
+  const w = S.week;
+  app.innerHTML = `<div class="stack" style="gap:22px">
+    <div><button class="btn ghost small" id="back">← All packs</button></div>
+    <div><div class="eyebrow">${esc(w.topic)} · ${esc(w.lessons)}</div><h1 class="big" style="font-size:clamp(26px,4.5vw,36px)">${esc(w.title)}</h1>
+      <p class="lead">Due <b>${fmt(w.due)}</b>. About ${w.minutes} minutes.</p></div>
+    <div class="two">
+      <div class="stack">
+        <h2 class="mid">Before you start</h2>
+        <ul class="checklist">
+          <li>Have your notes and slides from ${esc(w.lessons)} ready.</li>
+          <li>Work somewhere quiet. Treat it like a real exam.</li>
+          <li>Do the parts in order: ${w.sections.map(s=>s.crit==="R"?"the recall missions":s.crit).join(", then ")}. Use the buttons at the top to move between them.</li>
+          <li>Your answers save on this device as you type. You can close the page and continue later on the same device.</li>
+          <li>Answer on your own, from what you know and your class notes. Pasting is turned off, and the page records each time you leave it and for how long.</li>
+          <li>When everything is answered, go to <b>Submit</b>. You can only submit once.</li>
+        </ul>
+      </div>
+      <div class="stack">
+        <h2 class="mid">What's in this pack</h2>
+        ${w.sections.map(s=>`<div class="row" style="gap:12px;align-items:flex-start;flex-wrap:nowrap"><span class="crit ${s.crit}">${s.crit}</span><div><b>${esc(s.name)}</b><div class="note">${CRIT[s.crit].tests}</div></div></div>`).join("")}
+      </div>
+    </div>
+    <h2 class="mid">Types of question</h2>
+    <div class="types">
+      <div class="type"><b>Multiple choice</b>Click one answer.</div>
+      <div class="type"><b>Drop-down table</b>Choose an answer in every row.</div>
+      <div class="type"><b>Number answer</b>Type the number only. Round to 1 decimal place when asked.</div>
+      <div class="type"><b>Written answer</b>Full sentences. A bar shows when you have written the minimum number of words.</div>
+    </div>
+    <details class="terms" open><summary>Command terms: what the bold word in each question asks you to do</summary>
+      <div class="termlist">${Object.entries(TERMS).map(([t,d])=>`<b>${t[0].toUpperCase()+t.slice(1)}</b><span>${d}</span>`).join("")}</div>
+    </details>
+    <label class="pledge" for="pledge"><input type="checkbox" id="pledge" ${S.integ.pledged?"checked":""}><span><b>My promise.</b> I will answer these questions myself. I will not copy answers, search online, use AI or ask someone else to answer for me.</span></label>
+    <div class="navrow"><span class="saved" id="pledgeMsg"></span><button class="btn" id="go">${w.sections[0].crit==="R"?"Start the recall missions":"Start with criterion "+w.sections[0].crit} →</button></div>
+  </div>`;
+  document.getElementById("back").onclick = renderWeeks;
+  document.getElementById("pledge").onchange = e => { S.integ.pledged = e.target.checked; saveInteg(); };
+  document.getElementById("go").onclick = () => {
+    if (!S.integ.pledged){ document.getElementById("pledgeMsg").innerHTML = '<span class="err">Tick the promise box to start.</span>'; return; }
+    S.step = 1; renderStep();
+  };
+}
+
+/* drop-down options in a fixed, mixed order per question, so they never line up with the rows */
+function mixed(q){
+  const key = q.rows ? q.rows.map(r => r.answer) : (q.blanks || []);
+  let best = null, bestHits = 1e9;
+  for (let t = 0; t < 40 && bestHits > 0; t++){
+    let h = 2166136261 + t * 7919; for (const c of q.id) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; }
+    const rnd = () => { h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0; h = Math.imul(h ^ (h >>> 13), 3266489909) >>> 0; return ((h ^= h >>> 16) >>> 0) / 4294967296; };
+    const o = q.options.slice();
+    for (let i = o.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [o[i], o[j]] = [o[j], o[i]]; }
+    const hits = key.filter((a, i) => o[i] === a).length;
+    if (hits < bestHits) { best = o; bestHits = hits; }
+  }
+  return best;
+}
+function qHTML(q, L){
+  const a = S.answers[q.id];
+  let body = "";
+  if (q.type==="mcq") body = q.options.map((o,i)=>`<label class="opt"><input type="radio" name="${q.id}" value="${i}" ${a===i?"checked":""}><span>${esc(o)}</span></label>`).join("");
+  if (q.type==="match") body = `<div class="tbl"><table><thead><tr><th>${esc(q.head[0])}</th><th>${esc(q.head[1])}</th></tr></thead><tbody>${q.rows.map((r,i)=>`<tr><td>${esc(r.label)}</td><td><select id="${q.id}_${i}" data-q="${q.id}" data-i="${i}" aria-label="${esc(r.label)}"><option value="">Choose…</option>${mixed(q).map(o=>`<option ${(a||[])[i]===o?"selected":""}>${esc(o)}</option>`).join("")}</select></td></tr>`).join("")}</tbody></table></div>`;
+  if (q.type==="cloze") { let k = 0; body = `<div class="cloze">${esc(q.text).replace(/\[\[(\d+)\]\]/g, (m, n) => { const i = Number(n); return `<select id="${q.id}_${i}" data-q="${q.id}" data-i="${i}" aria-label="Gap ${i+1}"><option value="">Choose…</option>${mixed(q).map(o=>`<option ${(a||[])[i]===o?"selected":""}>${esc(o)}</option>`).join("")}</select>`; })}</div>`; }
+  if (q.type==="num") body = `<div class="num"><input class="input" id="${q.id}" data-q="${q.id}" inputmode="decimal" value="${esc(a??"")}" aria-label="Your answer"><span>${esc(q.unit||"")}</span></div>`;
+  if (q.type==="numtable") body = `<div class="tbl"><table><thead><tr><th>${esc(q.head[0])}</th><th>${esc(q.head[1])}</th></tr></thead><tbody>${q.rows.map((r,i)=>`<tr><td>${esc(r.label)}</td><td><input id="${q.id}_${i}" data-q="${q.id}" data-i="${i}" inputmode="decimal" value="${esc((a||[])[i]??"")}" aria-label="${esc(r.label)}"></td></tr>`).join("")}</tbody></table></div>`;
+  if (q.type==="text") body = `<textarea class="input" id="${q.id}" data-q="${q.id}" aria-label="Your answer" placeholder="${esc(q.placeholder||"Write your answer here…")}"></textarea><div class="wc" id="${q.id}_wc"></div>`;
+  const how = q.howto || (typeof HOWTO[q.type]==="function" ? HOWTO[q.type](q) : HOWTO[q.type]);
+  const terms = termsIn(q.prompt);
+  return `<div class="q" id="box_${q.id}"><div class="q-top"><span class="q-id">${L}</span><span class="q-marks">${q.marks} mark${q.marks>1?"s":""}</span></div>
+    <div class="q-prompt">${q.prompt}</div><div class="how-to"><b>How to answer:</b><span>${how}</span></div>${q.hint?`<div class="qhint"><b>Hint:</b> ${q.hint}</div>`:""}${body}
+    ${terms.length?`<div class="term">${terms.map(t=>`<b>${t[0].toUpperCase()+t.slice(1)}</b> means: ${TERMS[t]}`).join("<br>")}</div>`:""}</div>`;
+}
+
+function renderSection(sec){
+  const L = labels(S.week), st = steps(), i = S.step;
+  const next = st[i+1], prev = st[i-1];
+  const nm = k => k==="R" ? "recall missions" : "criterion " + k;
+  const nextLabel = next==="submit" ? "Check and submit →" : `Next: ${nm(next)} →`;
+  const prevLabel = prev==="start" ? "← Start page" : `← ${nm(prev)[0].toUpperCase()+nm(prev).slice(1)}`;
+  app.innerHTML = `<div class="stack" style="gap:16px">
+    <div class="sec-head"><span class="crit ${sec.crit}">${sec.crit}</span><div><div class="eyebrow">${sec.crit==="R"?"Revision":"Criterion "+sec.crit} · part ${i} of ${S.week.sections.length}</div><h1 style="font-size:clamp(24px,4vw,32px)">${esc(sec.name)}</h1></div></div>
+    <dl class="guide"><dt>What it tests</dt><dd>${CRIT[sec.crit].tests}</dd><dt>Top tip</dt><dd>${CRIT[sec.crit].tip}</dd></dl>
+    ${sec.items.map(q => q.type==="info" ? infoHTML(q) : qHTML(q, L[q.id]) + (TEACHER ? `<details class="teach-ans"><summary>Show answer</summary>${detailHTML(q, q.type==="mcq" ? q.answer : q.type==="match" ? q.rows.map(r=>r.answer) : q.type==="cloze" ? q.blanks : q.type==="numtable" ? q.rows.map(r=>String(r.answer)) : q.type==="num" ? String(q.min) : "").replace(/Your answer:/g,"Answer:")}</details>` : "")).join("")}
+    <div class="navrow"><button class="btn ghost" id="prev">${prevLabel}</button><span class="saved" id="saved">Answers save automatically</span><button class="btn" id="next">${nextLabel}</button></div>
+  </div>`;
+  sec.items.filter(q=>q.type==="text").forEach(q => { document.getElementById(q.id).value = S.answers[q.id] || ""; });
+  document.getElementById("prev").onclick = () => { S.step--; renderStep(); };
+  document.getElementById("next").onclick = () => { S.step++; renderStep(); };
+  updateCounts();
+}
+
+/* ---------- recall missions: Think first → Explore → Recall → Check yourself → Exam link ---------- */
+function missionList(sec){
+  const out = [];
+  sec.items.forEach((it, idx) => { if (it.type==="info" && it.mission) out.push({ m: it.mission, items: [] }); else if (out.length) out[out.length-1].items.push({ it, key: it.id || ("i"+idx) }); });
+  return out;
+}
+const isGate = it => it.predict || it.sim || it.flash || it.type !== "info";
+function gateDone(it, key){
+  const ms = MS();
+  if (it.predict) return ms.pred[key] != null;
+  if (it.sim) return !!ms.sim[key];
+  if (it.flash) return (ms.flip[key] || []).length >= it.flash.length;
+  if (it.type !== "info") return !!ms.chk[it.id];
+  return true;
+}
+const missionDone = ml => ml.items.every(({it, key}) => !isGate(it) || gateDone(it, key));
+function atpScore(sec){
+  const ms = MS(); let got = 0, max = 0;
+  sec.items.filter(q => q.type !== "info").forEach(q => { max += q.marks; if (ms.chk[q.id]) got += markOf(q, S.answers[q.id]) || 0; });
+  return [got, max];
+}
+function renderMissions(sec){
+  const ms = MS(), L = labels(S.week), list = missionList(sec), st = steps(), i = S.step;
+  const unlocked = j => TEACHER || j === 0 || list.slice(0, j).every(missionDone);
+  if (ms.cur >= list.length || !unlocked(ms.cur)) ms.cur = 0;
+  const next = st[i+1], prev = st[i-1];
+  const nm = k => k==="R" ? "recall missions" : "criterion " + k;
+  const [got, max] = atpScore(sec);
+  app.innerHTML = `<div class="stack" style="gap:16px">
+    <div class="sec-head"><span class="crit R">R</span><div><div class="eyebrow">Revision · part ${i} of ${S.week.sections.length}</div><h1 style="font-size:clamp(24px,4vw,32px)">${esc(sec.name)}</h1></div></div>
+    <dl class="guide"><dt>How it works</dt><dd>Each mission has 5 steps: <b>think first</b>, <b>explore</b> a simulation, <b>recall</b> with flip cards, <b>check yourself</b> with marked questions, then an <b>exam link</b>. Each step unlocks the next.</dd><dt>Marks</dt><dd>You get <b>one try</b> at each “Check yourself” question. Press <b>Check</b> and the marks are locked in, so think before you check. Every mark earns you ⚡ ATP.</dd></dl>
+    <div class="mtop"><nav class="mtrail" aria-label="Missions">${list.map((ml, j) => `${j ? `<span class="mpath ${missionDone(list[j-1]) ? "done" : ""}"></span>` : ""}<button class="mstop ${missionDone(ml) ? "done" : ""}" data-m="${j}" ${unlocked(j) ? "" : "disabled"} ${ms.cur === j ? 'aria-current="step"' : ""}><span class="d">${missionDone(ml) ? "✓" : ml.m.n}</span><span class="t">${esc(ml.m.title)}</span></button>`).join("")}</nav>
+      <span class="atp" id="atp" title="Marks earned in the recall missions">⚡ ${got} / ${max} ATP</span></div>
+    <div id="mbody" class="stack" style="gap:16px"></div>
+    <div class="navrow"><button class="btn ghost" id="prev">${prev==="start" ? "← Start page" : "← " + nm(prev)}</button><span class="saved" id="saved">Progress saves automatically</span><button class="btn ghost" id="next">${next==="submit" ? "Check and submit →" : `Skip to ${nm(next)} →`}</button></div>
+  </div>`;
+  app.querySelectorAll("[data-m]").forEach(b => b.onclick = () => { ms.cur = Number(b.dataset.m); saveMS(); renderMissions(sec); window.scrollTo(0, 0); });
+  document.getElementById("prev").onclick = () => { S.step--; renderStep(); };
+  document.getElementById("next").onclick = () => { S.step++; renderStep(); };
+  const ml = list[ms.cur], body = document.getElementById("mbody");
+  body.insertAdjacentHTML("beforeend", infoHTML({ mission: ml.m }));
+  let ptr = 0;
+  const refreshTop = () => {
+    const [g, mx] = atpScore(sec); document.getElementById("atp").textContent = `⚡ ${g} / ${mx} ATP`;
+    updateCounts(); syncProgress(false);
+  };
+  const reveals = () => body.querySelectorAll("[data-reveal]").forEach(el => {
+    const it = ml.items.find(x => x.key === el.dataset.reveal).it, simDone = ml.items.some(x => x.it.sim && ms.sim[x.key]);
+    if (!simDone && !TEACHER) return;
+    const p = ms.pred[el.dataset.reveal], right = p === it.predict.answer;
+    if (TEACHER && p == null){ el.className = "reveal"; el.hidden = false; el.innerHTML = `<b>Answer: ${esc(it.predict.options[it.predict.answer])}.</b> ${it.predict.reveal}`; return; }
+    el.className = "reveal" + (right ? "" : " miss"); el.hidden = false;
+    el.innerHTML = `<b>${right ? "Your prediction was right!" : "Surprised?"}</b> ${it.predict.reveal}`;
+  });
+  function blockFor(it, key){
+    const box = document.createElement("section"); box.className = "mblock"; box.dataset.key = key;
+    if (it.predict){
+      const p = ms.pred[key];
+      box.innerHTML = `<span class="mtag think">Think first</span><h3>${it.predict.q}</h3><div class="popts">${it.predict.options.map((o, j) => `<button type="button" class="popt ${p === j ? "sel" : ""}" data-j="${j}" ${p != null ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>
+        <div class="locked" ${p == null ? "hidden" : ""}>Prediction locked in. Explore below to test it. (Predictions are not marked.)</div><div data-reveal="${key}" hidden></div>`;
+      box.querySelectorAll(".popt").forEach(b => b.onclick = () => { ms.pred[key] = Number(b.dataset.j); saveMS(); box.replaceWith(blockFor(it, key)); grow(true); });
+    } else if (it.sim){
+      box.innerHTML = `<span class="mtag explore">Explore</span><h3>${esc(it.sim.title)}</h3>`;
+      const root = document.createElement("div"); box.append(root);
+      ms.simdata[key] = ms.simdata[key] || {};
+      const api = { store: ms.simdata[key], save: saveMS, done: () => { if (ms.sim[key]) return; ms.sim[key] = 1; saveMS(); reveals(); toast("Simulation complete. Next step unlocked ↓"); grow(true); } };
+      try { window.SIMS[it.sim.name](root, api); } catch (e) { root.innerHTML = `<p class="err">This simulation could not load. Tap continue.</p>`; const b = document.createElement("button"); b.className = "btn"; b.textContent = "Continue"; b.onclick = api.done; root.append(b); }
+    } else if (it.flash){
+      const f = ms.flip[key] || [];
+      box.innerHTML = `<span class="mtag recall">Recall</span><h3>Flip cards</h3><p>Say the answer out loud, or in your head, <b>before</b> you flip each card. Flip them all to continue.</p>
+        <div class="fcards">${it.flash.map((c, j) => `<button type="button" class="fcard" data-j="${j}" aria-label="${esc(c.q)}. Tap to flip"><span class="in"><span class="f fr"><b>${esc(c.q)}</b><small>${f.includes(j) ? "✓ seen · tap to flip" : "tap to flip"}</small></span><span class="f bk">${esc(c.a)}</span></span></button>`).join("")}</div>`;
+      box.querySelectorAll(".fcard").forEach(b => b.onclick = () => {
+        b.classList.toggle("on"); const j = Number(b.dataset.j), arr = ms.flip[key] = ms.flip[key] || [];
+        if (!arr.includes(j)){ arr.push(j); saveMS(); b.querySelector("small").textContent = "✓ seen · tap to flip"; if (arr.length >= it.flash.length) grow(true); }
+      });
+    } else if (it.exam){
+      box.innerHTML = `<span class="mtag exam">Exam link</span><div class="mres">${it.exam}</div>`;
+    } else if (it.type !== "info"){
+      const q = { ...it, crit: "R" };
+      if (ms.chk[q.id]){
+        const m = markOf(q, S.answers[q.id]);
+        box.innerHTML = `<span class="mtag check">Check yourself</span><div class="q" style="border:0;padding:0;margin-top:8px"><div class="q-top"><span class="q-id">${L[q.id]}</span><span class="mark ${m === q.marks ? "good" : "bad"}">${m}/${q.marks}</span></div><div class="q-prompt">${q.prompt}</div><div class="mres">${detailHTML(q, S.answers[q.id])}</div></div>`;
+      } else {
+        box.innerHTML = `<span class="mtag check">Check yourself</span>${qHTML(q, L[q.id])}<div class="chkrow"><span class="note">One try only: your marks lock when you press Check.</span><button type="button" class="btn" id="chk_${q.id}" ${answered(q, S.answers[q.id]) ? "" : "disabled"}>Check</button></div>`;
+        box.querySelector(".q").style.cssText = "border:0;padding:0;margin-top:8px";
+        if (TEACHER){
+          const key = q.type==="mcq" ? q.answer : q.type==="match" ? q.rows.map(r=>r.answer) : q.type==="cloze" ? q.blanks.slice() : q.type==="numtable" ? q.rows.map(r=>String(r.answer)) : null;
+          const tb = document.createElement("button"); tb.type = "button"; tb.className = "btn ghost small"; tb.textContent = "Show answer";
+          const ans = document.createElement("div"); ans.className = "teach-ans"; ans.hidden = true; ans.innerHTML = `<b>Answer key</b>${detailHTML(q, key).replace(/Your answer:/g,"Answer:")}`;
+          tb.onclick = () => { ans.hidden = !ans.hidden; tb.textContent = ans.hidden ? "Show answer" : "Hide answer"; };
+          box.querySelector(".chkrow").prepend(tb); box.append(ans);
+        }
+        box.querySelector("#chk_" + q.id).onclick = () => {
+          if (!answered(q, S.answers[q.id])) return;
+          ms.chk[q.id] = 1; saveMS();
+          const m = markOf(q, S.answers[q.id]);
+          toast(m === q.marks ? `Full marks! +${m} ATP ⚡` : `+${m} ATP ⚡. Read the correct answers below.`);
+          box.replaceWith(blockFor(it, key)); refreshTop(); grow(true);
+        };
+      }
+    } else return null;
+    return box;
+  }
+  function grow(scroll){
+    let first = null;
+    while (ptr < ml.items.length){
+      const {it, key} = ml.items[ptr++], b = blockFor(it, key);
+      if (b){ body.append(b); first = first || b; }
+      if (!TEACHER && isGate(it) && !gateDone(it, key)) break;
+    }
+    if (ptr >= ml.items.length && missionDone(ml) && !body.querySelector(".mdone")){
+      const last = ms.cur === list.length - 1, [g, mx] = atpScore(sec);
+      const d = document.createElement("div"); d.className = "mdone";
+      d.innerHTML = `<div class="big">✓</div><div class="grow"><b>Mission ${ml.m.n} complete!</b><div class="note">${last ? `All four missions done. You earned ${g} of ${mx} ATP. Now use what you recalled in the exam-style questions.` : "The next mission is unlocked."}</div></div><button class="btn" type="button">${last ? `Next: ${nm(next)} →` : `Mission ${list[ms.cur+1].m.n}: ${esc(list[ms.cur+1].m.title)} →`}</button>`;
+      d.querySelector("button").onclick = () => { if (last){ S.step++; renderStep(); } else { ms.cur++; saveMS(); renderMissions(sec); window.scrollTo(0, 0); } };
+      body.append(d); first = first || d;
+      app.querySelectorAll(".mstop")[ms.cur]?.classList.add("done");
+    }
+    reveals();
+    if (scroll && first) setTimeout(() => first.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }), 80);
+  }
+  grow(false);
+  updateCounts();
+}
+
+function onInput(e){
+  if (S.mode !== "week") return;
+  const el = e.target, id = el.dataset.q || el.name;
+  if (!id) return;
+  if (e.type === "change" && (el.tagName === "TEXTAREA" || (el.tagName === "INPUT" && el.type !== "radio"))) return;
+  const q = items(S.week).find(x => x.id===id); if (!q) return;
+  if (q.type==="mcq") S.answers[id] = Number(el.value);
+  else if (q.type==="match"||q.type==="numtable"||q.type==="cloze"){ const arr = S.answers[id] || []; arr[Number(el.dataset.i)] = el.value; S.answers[id] = arr; }
+  else {
+    const before = String(S.answers[id] || "").length;
+    if (q.type === "text" && el.value.length - before > 60) { S.integ.big++; saveInteg(); toast("A large block of text appeared at once. This has been recorded."); }
+    S.answers[id] = el.value;
+  }
+  ls(draftKey(), S.answers);
+  document.getElementById("box_"+id)?.classList.remove("missing");
+  const cb = document.getElementById("chk_"+id); if (cb) cb.disabled = !answered(q, S.answers[id]);
+  const sv = document.getElementById("saved"); if (sv) sv.textContent = "Saved on this device ✓";
+  syncProgress(false);
+  updateCounts();
+}
+function updateCounts(){
+  items(S.week).filter(q=>q.type==="text").forEach(q => {
+    const n = words(S.answers[q.id]), el = document.getElementById(q.id+"_wc"), ta = document.getElementById(q.id);
+    if (!el) return;
+    const ok = n>=q.minWords;
+    el.className = "wc" + (ok?" ok":"");
+    el.innerHTML = `<span class="bar2"><i style="width:${Math.min(100,Math.round(n/q.minWords*100))}%"></i></span><span>${n} / ${q.minWords} words${ok?" ✓":""}</span>`;
+    ta.classList.toggle("enough", ok);
+  });
+  // refresh stepper counts without re-rendering the page
+  const qs = items(S.week);
+  stickyMount.querySelectorAll(".step").forEach(b => {
+    const k = steps()[Number(b.dataset.step)];
+    if (k==="start") return;
+    if (k==="submit"){ b.classList.toggle("full", qs.every(ok)); return; }
+    const sq = qs.filter(q=>q.crit===k), d = sq.filter(ok).length;
+    const full = d===sq.length;
+    b.classList.toggle("full", full); const n = b.querySelector(".n"); if (n) n.textContent = full ? k+" done" : d+"/"+sq.length;
+    const dot = b.querySelector(".dot"); if (dot) dot.textContent = full ? "✓" : k;
+  });
+}
+
+function renderSubmit(){
+  const w = S.week, L = labels(w), qs = items(w), st = steps();
+  const todo = qs.filter(q => !ok(q));
+  app.innerHTML = `<div class="stack" style="gap:18px">
+    <div><div class="eyebrow">Last step</div><h1 style="font-size:clamp(24px,4vw,32px)">Check and submit</h1>
+      <p class="lead">Due ${fmt(w.due)}. ${todo.length ? "Finish the questions below, then come back here." : "Everything is answered. Read through your answers once more, then submit."}</p></div>
+    <div class="panel">${w.sections.map(s=>{
+      const sq = qs.filter(q=>q.crit===s.crit), left = sq.filter(q=>!ok(q));
+      return `<div class="sumrow"><div class="row" style="gap:12px;flex-wrap:nowrap;align-items:flex-start"><span class="crit ${s.crit}">${s.crit}</span><div><b>${esc(s.name)}</b>${left.length?`<ul class="todo">${left.map(q=>`<li>${L[q.id]} not finished${q.crit==="R"&&answered(q,S.answers[q.id])?" (press Check)":""}${q.type==="text"?` (${words(S.answers[q.id])} of ${q.minWords} words)`:""}</li>`).join("")}</ul>`:`<div class="note" style="color:var(--green)">All ${sq.length} answered ✓</div>`}</div></div>
+        ${left.length?`<button class="btn small ghost" data-go="${st.indexOf(s.crit)}" data-q="${left[0].id}">Go to ${s.crit}</button>`:""}</div>`;}).join("")}</div>
+    <div id="submitArea"></div>
+    <div class="navrow"><button class="btn ghost" id="prev">← Criterion ${st[st.length-2]}</button><span></span></div>
+  </div>`;
+  document.getElementById("prev").onclick = () => { S.step--; renderStep(); };
+  app.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { S.step = Number(b.dataset.go); renderStep(); const t = document.getElementById("box_"+b.dataset.q); if (t){ t.classList.add("missing"); t.scrollIntoView({block:"center"}); } });
+  const area = document.getElementById("submitArea");
+  if (todo.length && S.student.id === "TEST1"){
+    area.innerHTML = `<div class="panel confirm stack"><h2 class="mid">Teacher test submit</h2><p style="margin:0">Only the TEST1 account sees this. It sends this pack to the Sheet as it is, so you can check that submissions arrive.</p><div class="err" id="subErr"></div><div class="row"><button class="btn" id="yes">Send test submission</button></div></div>`;
+    document.getElementById("yes").onclick = doSubmit; return;
+  }
+  if (todo.length){ area.innerHTML = `<div class="panel"><b>You can't submit yet.</b> ${todo.length} question${todo.length>1?"s are":" is"} not finished.</div>`; return; }
+  area.innerHTML = `<div class="panel confirm stack"><h2 class="mid">Ready to submit?</h2><p style="margin:0">Once you submit, you can't change your answers. You will see your marks and the model answers straight away.</p>
+    <div class="err" id="subErr"></div><div class="row"><button class="btn" id="yes">Submit my pack</button></div></div>`;
+  document.getElementById("yes").onclick = doSubmit;
+}
+
+function effortFlag(qs){
+  const texts = qs.filter(q=>q.type==="text").map(q=>String(S.answers[q.id]||"").trim().toLowerCase());
+  const reasons = [];
+  texts.forEach(t => { const ws = t.match(/[a-z0-9]+/g)||[]; if (ws.length>=8 && new Set(ws).size/ws.length < 0.45) reasons.push("repeated words"); });
+  const seen = new Set(); texts.forEach(t => { if (t.length>20 && seen.has(t)) reasons.push("same answer copied"); seen.add(t); });
+  return [...new Set(reasons)].join(", ");
+}
+
+async function doSubmit(){
+  const b = document.getElementById("yes"); b.disabled = true; b.textContent = "Submitting…";
+  const qs = items(S.week);
+  let auto = 0, autoMax = 0, wc = 0;
+  qs.forEach(q => { const m = markOf(q, S.answers[q.id]); if (m!==null){ auto+=m; autoMax+=q.marks; } if (q.type==="text") wc += words(S.answers[q.id]); });
+  const I = S.integ, reasons = [];
+  if (I.left >= 3) reasons.push(`left the page ${I.left} times`);
+  if (I.away >= 120) reasons.push(`${Math.round(I.away/60)} min away from the page`);
+  if (I.big > 0) reasons.push(`large text inserted ${I.big}×`);
+  if (I.paste >= 3) reasons.push(`${I.paste} paste attempts`);
+  if (I.active < 600) reasons.push(`only ${Math.round(I.active/60)} min on the pack`);
+  const payload = { id:S.student.id, week:S.week.id, answers:S.answers, auto, autoMax, words:wc, flag:effortFlag(qs), late: now() > new Date(S.week.due),
+    integ:{ left:I.left, away:I.away, paste:I.paste, big:I.big, active:I.active }, integFlag: reasons.join(", ") };
+  try {
+    let r, lastErr;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try { r = await API.submit(payload); lastErr = null; break; }
+      catch (e) { lastErr = e; b.textContent = "Trying again…"; await new Promise(res => setTimeout(res, attempt * 2500)); }
+    }
+    /* keep a permanent copy of what was sent on this device, whatever happens */
+    try { localStorage.setItem("y10rev_sent_" + S.student.id + "_" + S.week.id, JSON.stringify({ at: new Date().toISOString(), payload })); } catch (e) {}
+    /* never trust the reply alone: confirm the Sheet really has this pack */
+    if (!lastErr && !API.demo) {
+      try { const st = await API.verify(S.student.id); const sub = (st.submissions || []).find(s => s.week === S.week.id); if (!sub) lastErr = new Error("the Sheet did not store it"); else r = { ts: sub.ts }; }
+      catch (e) { /* could not check: keep the answers on the device to be safe */ r.unconfirmed = true; }
+    }
+    if (lastErr) {
+      /* the answers may have been saved even though the reply was lost, or the backup route may get through */
+      const landed = async () => { try { const st = await API.verify(S.student.id); return (st.submissions || []).find(s => s.week === S.week.id); } catch (e) { return null; } };
+      let sub = await landed();
+      if (!sub) { b.textContent = "Trying another way…"; try { await API.submitBackup({ ...payload, submitError: String(lastErr && lastErr.message || lastErr) }); } catch (e) {} await new Promise(res => setTimeout(res, 3000)); sub = await landed(); }
+      if (!sub) throw lastErr;
+      r = { ts: sub.ts };
+    }
+    const ts = r.ts || new Date().toISOString();
+    S.student.submissions = (S.student.submissions||[]).filter(s=>s.week!==S.week.id).concat([{week:S.week.id, ts, auto, autoMax, answers:S.answers}]);
+    if (!r.unconfirmed) { try { localStorage.removeItem(draftKey()); localStorage.removeItem(draftKey()+"_i"); } catch(e){} }
+    renderResult(S.answers, ts, true);
+  } catch(err){
+    try { API.progress({ id:S.student.id, week:S.week.id, answered: qs.length, total: qs.length, sections:{}, integ:{}, submitError: String(err && err.message || err) }); } catch(e){}
+    document.getElementById("subErr").textContent = "Your pack was NOT submitted (" + err.message + "). Your answers are still saved on this device. Wait a minute and press Submit again. If it still fails, tell your teacher.";
+    b.disabled = false; b.textContent = "Submit my pack";
+  }
+}
+
+function detailHTML(q, a){
+  const m = markOf(q, a);
+  let detail = "";
+    if (q.type==="mcq") detail = `<div class="fb">Your answer: <b>${esc(Number.isInteger(a)?q.options[a]:"—")}</b>${m?"":` · Correct answer: <b>${esc(q.options[q.answer])}</b>`}</div><div class="fb">${esc(q.explain||"")}</div>`;
+    if (q.type==="match") detail = `<div class="tbl"><table><tbody>${q.rows.map((r,i)=>{const ok=(a||[])[i]===r.answer;return `<tr><td>${esc(r.label)}</td><td>${ok?"✓":"✗"} ${esc((a||[])[i]||"—")}${ok?"":` <br><span class="note">Correct: ${esc(r.answer)}</span>`}</td></tr>`;}).join("")}</tbody></table></div>`;
+    if (q.type==="cloze") detail = `<div class="cloze">${esc(q.text).replace(/\[\[(\d+)\]\]/g, (m, n) => { const i = Number(n), v = (a||[])[i], ok = v===q.blanks[i]; return ok ? `<span class="ok">✓ ${esc(v)}</span>` : `<span class="no">✗ ${esc(v||"—")}</span> <span class="note">(${esc(q.blanks[i])})</span>`; })}</div>`;
+    if (q.type==="num") detail = `<div class="fb">Your answer: <b>${esc(a??"—")} ${esc(q.unit||"")}</b></div><div class="fb">${esc(q.explain||"")}</div>`;
+    if (q.type==="numtable") detail = `<div class="tbl"><table><tbody>${q.rows.map((r,i)=>{const n=num((a||[])[i]);const ok=n!==null&&Math.abs(n-r.answer)<=r.tol+1e-9;return `<tr><td>${esc(r.label)}</td><td>${ok?"✓":"✗"} ${esc((a||[])[i]??"—")}${ok?"":` <br><span class="note">Correct: ${r.answer.toFixed(1)}${r.hint?". "+esc(r.hint):""}</span>`}</td></tr>`;}).join("")}</tbody></table></div>`;
+    if (q.type==="text") detail = `<div class="note">Your answer</div><div class="yours" data-yours="${q.id}"></div><div class="model"><b>Model answer</b><div>${esc(q.model)}</div><b style="display:block;margin-top:8px">Mark points: did you include these?</b><ul>${q.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>`;
+  return detail;
+}
+
+/* ---------- 4. marks + model answers ---------- */
+function renderResult(ans, ts, fresh){
+  S.mode = "result";
+  const w = S.week, L = labels(w), qs = items(w);
+  stickyMount.innerHTML = ""; setWho();
+  let auto=0, autoMax=0, textMax=0;
+  qs.forEach(q=>{ const m=markOf(q,ans[q.id]); if(m!==null){auto+=m;autoMax+=q.marks;} else textMax+=q.marks; });
+  const late = new Date(ts) > new Date(w.due);
+  const block = q => {
+    const a = ans[q.id], m = markOf(q,a);
+    const detail = detailHTML(q, a);
+    const tag = m===null ? `<span class="mark self">Your teacher marks this · ${q.marks}</span>` : `<span class="mark ${m===q.marks?"good":"bad"}">${m}/${q.marks}</span>`;
+    return `<div class="q"><div class="q-top"><span class="q-id">${L[q.id]}</span>${tag}</div><div class="q-prompt">${q.prompt}</div>${detail}</div>`;
+  };
+  app.innerHTML = `<div class="stack" style="gap:18px">
+    <div><button class="btn ghost small" id="back">← All packs</button></div>
+    <div><div class="eyebrow">${fresh?"Submitted. Well done":"Submitted"} · ${fmt(ts)}${late?" · late":""}</div><h1 style="font-size:clamp(26px,4.5vw,34px);margin-top:4px">${esc(w.title)}</h1></div>
+    <div class="two">
+      <div class="panel score"><b>${auto}/${autoMax}</b><div><b>Auto-marked questions</b><div class="note">Your teacher marks the written questions (${textMax} marks).</div></div></div>
+      <div class="panel"><b>What to do now</b><ol class="next" style="margin-top:8px"><li>Read each model answer below.</li><li>Correct your answers in a different colour in your book.</li><li>Write down one thing you need to revise before next week.</li></ol></div>
+    </div>
+    ${w.sections.map(s=>`<section class="stack" style="gap:12px"><div class="sec-head" style="margin-top:14px"><span class="crit ${s.crit}">${s.crit}</span><h2 class="mid">${esc(s.name)}</h2></div>${s.items.map(q=>q.type==="info"?infoHTML(q):block(q)).join("")}</section>`).join("")}
+  </div>`;
+  app.querySelectorAll("[data-yours]").forEach(el => { const t = ans[el.dataset.yours]; el.textContent = t ? t : "No answer recorded."; });
+  document.getElementById("back").onclick = renderWeeks;
+  window.scrollTo(0,0);
+}
+
+/* ---------- fair-work checks (only while a pack is open) ---------- */
+function saveInteg(){ if (S.student && S.week) ls(draftKey()+"_i", S.integ); }
+let toastTimer = null;
+function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 6000); }
+const working = () => !TEACHER && S.mode === "week" && S.integ;
+["paste","drop"].forEach(ev => document.addEventListener(ev, e => {
+  if (!working()) return;
+  e.preventDefault(); S.integ.paste++; saveInteg();
+  toast("Pasting is turned off. Type your answer in your own words.");
+}, true));
+["copy","cut"].forEach(ev => document.addEventListener(ev, e => {
+  if (!working()) return;
+  e.preventDefault(); toast("Copying is turned off while you work on a pack.");
+}, true));
+document.addEventListener("contextmenu", e => { if (working() && !e.target.closest("textarea, input")) e.preventDefault(); });
+let awayStart = null;
+function goneAway(){ if (working() && awayStart === null) awayStart = Date.now(); }
+function cameBack(){
+  if (awayStart === null || document.hidden || !document.hasFocus()) return;
+  const secs = Math.round((Date.now() - awayStart) / 1000); awayStart = null;
+  if (!working() || secs < 2) return;
+  S.integ.left++; S.integ.away += secs; saveInteg();
+  toast(`You left this page (${S.integ.left} time${S.integ.left>1?"s":""} so far). Your teacher can see how often you leave and for how long.`);
+}
+document.addEventListener("visibilitychange", () => { if (document.hidden) { goneAway(); syncProgress(true); } else cameBack(); });
+
+/* ---------- send progress to the teacher (not answers) ---------- */
+let progTimer = null, lastProg = "";
+function syncProgress(now){
+  if (!S.student || !S.week || !S.integ || S.mode === "result") return;
+  clearTimeout(progTimer);
+  const go = () => {
+    const qs = items(S.week), sections = {};
+    S.week.sections.forEach(s => { const sq = qs.filter(q => q.crit === s.crit); sections[s.crit] = sq.filter(ok).length + "/" + sq.length; });
+    const answeredN = qs.filter(ok).length;
+    const sig = answeredN + JSON.stringify(sections) + S.integ.left + "|" + Math.floor(S.integ.active / 60);
+    if (sig === lastProg && !now) return;
+    lastProg = sig;
+    API.progress({ id: S.student.id, week: S.week.id, answered: answeredN, total: qs.length, sections, integ: { left: S.integ.left, away: S.integ.away, active: S.integ.active } });
+  };
+  if (now) go(); else progTimer = setTimeout(go, 15000);
+}
+setInterval(() => { if (S.mode === "week") syncProgress(false); }, 60000);
+window.addEventListener("blur", goneAway);
+window.addEventListener("focus", cameBack);
+setInterval(() => { if (working() && !document.hidden && document.hasFocus()) { S.integ.active += 5; saveInteg(); } }, 5000);
+
+app.addEventListener("input", onInput);
+app.addEventListener("change", onInput);
+
+(async () => {
+  const last = ls("y10rev_last_id");
+  if (last) { try { S.student = await API.verify(last); return renderWeeks(); } catch(e){} }
+  renderLogin();
+})();
+})();
+</script>
+</body>
+</html>
