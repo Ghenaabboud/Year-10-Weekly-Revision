@@ -562,6 +562,251 @@ window.REVISION_WEEKS = [
     ]
   }
   ]
+},
+{
+  id: "w3",
+  title: "Reflecting on science: desalination and osmosis",
+  topic: "Unit 1: Cells",
+  lessons: "Unit 1 – Lessons 3–7 · criterion D practice",
+  opens: "2026-11-16T07:00:00+04:00",
+  due: "2026-11-22T23:59:00+04:00",
+  minutes: 60,
+  sections: [
+  {
+    crit: "R", name: "Skills workshop: how to write criterion D", short: "skills workshop",
+    tests: "Step-by-step lessons on how to write each part of criterion D, with quick marked checks.",
+    how: "Each mission teaches <b>one skill</b> for criterion D. Read the <b>Learn</b> card, then answer the <b>Check yourself</b> questions. Finish each mission to unlock the next one. You will use every skill in the desalination task afterwards.",
+    items: [
+      /* ---------- Mission 1: what criterion D asks ---------- */
+      { type: "info", mission: { n: 1, title: "What criterion D asks you to do", lesson: "Criterion D · all strands",
+        story: "Criterion D is not about remembering facts. It asks how science is used to solve a real problem, and what that means for people, money and the planet." } },
+      { type: "info", learn: { h: "The four strands of criterion D",
+        html: "<div class='tbl'><table><thead><tr><th>Strand</th><th>What you must do</th><th>Typical question</th></tr></thead><tbody>"
+          + "<tr><td><b>i</b></td><td>Explain <b>how science is applied</b> to solve a problem</td><td>“Describe how science has been applied to…”</td></tr>"
+          + "<tr><td><b>ii</b></td><td>Discuss and evaluate the <b>implications</b> (effects) of using that science</td><td>“Describe one social advantage and one social disadvantage…”</td></tr>"
+          + "<tr><td><b>iii</b></td><td>Use <b>scientific language</b> correctly and clearly</td><td>Marked in every answer</td></tr>"
+          + "<tr><td><b>iv</b></td><td><b>Document your sources</b>: say where your evidence comes from</td><td>“Use evidence from the sources…”</td></tr></tbody></table></div>"
+          + "<p><b>The command term tells you how much to write:</b></p><ul><li><b>Describe:</b> give a detailed account of what happens.</li><li><b>Explain:</b> give reasons (because…, so…).</li><li><b>Discuss:</b> give arguments for AND against, with evidence.</li><li><b>Evaluate:</b> weigh up the advantages and disadvantages, then make a judgement.</li><li><b>Justify:</b> give the evidence that supports your opinion.</li></ul>"
+          + "<div class='mist'><b>Why students lose marks in D</b><ul><li>Only writing about one side (only advantages).</li><li>No evidence: no numbers or sources quoted.</li><li>No conclusion, or a conclusion with no reason.</li><li>Missing one of the bullet points in the question.</li></ul></div>" } },
+      { id: "w3r1", type: "match", marks: 5,
+        prompt: "Match each <b>command term</b> to what it asks you to do.",
+        head: ["Command term", "What you must do"],
+        options: ["Give a detailed account of what happens", "Give reasons: say why or how", "Give arguments for and against, with evidence", "Weigh up advantages and disadvantages, then make a judgement", "Give evidence that supports your opinion"],
+        rows: [
+          { label: "Describe", answer: "Give a detailed account of what happens" },
+          { label: "Explain", answer: "Give reasons: say why or how" },
+          { label: "Discuss", answer: "Give arguments for and against, with evidence" },
+          { label: "Evaluate", answer: "Weigh up advantages and disadvantages, then make a judgement" },
+          { label: "Justify", answer: "Give evidence that supports your opinion" }
+        ] },
+      { type: "info", exam: "<b>In the eAssessment</b>, criterion D questions usually come at the end and carry the most marks. The last question is often worth 8–13 marks and lists bullet points. <b>Every bullet point is worth marks</b>, so tick them off as you write." },
+
+      /* ---------- Mission 2: how science is applied ---------- */
+      { type: "info", mission: { n: 2, title: "Explain how science is applied", lesson: "Criterion D · strand i",
+        story: "Before you discuss whether something is good or bad, show that you understand how the science works and how it solves the problem." } },
+      { type: "info", learn: { h: "Problem → science → how it works → how it solves the problem",
+        html: "<div class='frame'><span class='p1'>The problem is…</span> <span class='p2'>Scientists use… [the technology or treatment]</span>. <span class='p3'>It works because… [link to what you learned in class]</span>. <span class='p4'>This solves the problem because…</span></div>"
+          + "<div class='wex'><b>Worked example: oral rehydration solution (ORS)</b><span class='p1'>The problem is that diarrhoea makes the body lose a lot of water and salts, which can be deadly for young children.</span> <span class='p2'>Doctors use oral rehydration solution: clean water with salts and glucose dissolved in it.</span> <span class='p3'>It works because glucose and sodium are absorbed into the cells lining the small intestine. This raises the solute concentration inside the cells, so water follows them into the cells by osmosis.</span> <span class='p4'>This solves the problem because the patient takes back the water and salts they lost, without needing a hospital drip.</span></div>"
+          + "<div class='mist'><b>Not good enough</b><ul><li>“<i>ORS helps sick children.</i>” No science and no explanation.</li><li>“<i>ORS has salt and sugar in it.</i>” It says what ORS is, but not how it works or how it solves the problem.</li></ul></div>" } },
+      { id: "w3r2", type: "cloze", marks: 6,
+        prompt: "Complete the explanation of how oral rehydration solution works.",
+        text: "Diarrhoea makes the body lose [[0]] and salts. ORS is water with salts and [[1]] dissolved in it. Glucose and sodium are absorbed into the cells lining the [[2]]. This makes the solute concentration inside the cells [[3]], so the water concentration inside is [[4]]. Water follows into the cells by [[5]], so the patient is rehydrated.",
+        options: ["water", "oxygen", "glucose", "starch", "small intestine", "stomach", "higher", "lower", "osmosis", "active transport"],
+        blanks: ["water", "glucose", "small intestine", "higher", "lower", "osmosis"] },
+      { id: "w3r3", type: "mcq", marks: 1,
+        prompt: "Which answer best <b>explains how science is applied</b> in a hospital drip?",
+        options: ["Drips are used in hospitals to help patients.", "A drip contains 0.9% salt solution, which is safe.", "Dehydrated patients need water quickly. A drip puts 0.9% salt solution straight into the blood. It is isotonic with red blood cells, so there is no net movement of water and the cells keep their shape, but the blood volume is restored.", "Pure water would make red blood cells burst."], answer: 2,
+        explain: "It has all four parts: the problem (dehydration), the science used (0.9% salt drip), how it works (isotonic, so there is no net osmosis) and how it solves the problem (restores blood volume safely)." },
+      { type: "info", exam: "<b>In the eAssessment</b> this appears as “<b>Describe</b> the ways in which science has been applied to…” (usually 3–4 marks). Use the 4-part frame and include at least one key science word from class, such as <i>osmosis</i>, <i>partially permeable membrane</i> or <i>concentration</i>." },
+
+      /* ---------- Mission 3: implications ---------- */
+      { type: "info", mission: { n: 3, title: "Implications: advantages and disadvantages", lesson: "Criterion D · strand ii",
+        story: "Every use of science has effects beyond the lab. Examiners want you to sort them into types and explain each one fully." } },
+      { type: "info", learn: { h: "Sort the effects, then develop each point",
+        html: "<div class='tbl'><table><thead><tr><th>Type of implication</th><th>Ask yourself</th></tr></thead><tbody>"
+          + "<tr><td><b>Social</b></td><td>How does it affect people's daily lives, health and communities?</td></tr>"
+          + "<tr><td><b>Economic</b></td><td>What does it cost? Who pays? Does it save or make money?</td></tr>"
+          + "<tr><td><b>Environmental</b></td><td>How does it affect living things, energy use, pollution and the climate?</td></tr>"
+          + "<tr><td><b>Ethical</b></td><td>Is it fair and right? Who benefits and who might be harmed?</td></tr></tbody></table></div>"
+          + "<p><b>Develop every point with P-E-C:</b></p><div class='frame'><span class='p1'>Point:</span> one advantage or disadvantage. <span class='p2'>Evidence:</span> a fact or number from a source. <span class='p3'>Consequence:</span> “This means that…” say why it matters.</div>"
+          + "<div class='wex'><b>Worked example: economic advantage of ORS</b><span class='p1'>ORS is very cheap to make,</span> <span class='p2'>because it only needs clean water, salt and sugar.</span> <span class='p3'>This means that poor families can treat their children at home, without paying for hospital care.</span></div>"
+          + "<div class='mist'><b>Too short for marks</b><ul><li>“<i>It is cheap.</i>” This is a point with no evidence and no consequence.</li><li>“<i>It is bad for the environment.</i>” How? What is the evidence?</li></ul></div>" } },
+      { id: "w3r4", type: "match", marks: 4,
+        prompt: "<b>Identify</b> the type of implication for each statement about ORS.",
+        head: ["Statement", "Type of implication"],
+        options: ["social", "economic", "environmental", "ethical"],
+        rows: [
+          { label: "A packet of ORS costs very little, so poor families can afford it.", answer: "economic" },
+          { label: "Parents can give ORS at home, so children do not have to stay in hospital away from their family.", answer: "social" },
+          { label: "Millions of plastic ORS sachets add to plastic waste.", answer: "environmental" },
+          { label: "Every child should have equal access to a treatment that can save their life.", answer: "ethical" }
+        ] },
+      { id: "w3r5", type: "mcq", marks: 1,
+        prompt: "Which point about hospital drips is <b>fully developed</b> (point + evidence + consequence)?",
+        options: ["Drips are expensive.", "Drips are good for patients.", "Drips need trained nurses and sterile equipment, which cost money, so treating dehydration with a drip is much more expensive than with ORS, and some clinics cannot afford it.", "Drips use 0.9% salt."], answer: 2,
+        explain: "It makes a point (drips are expensive), gives evidence of why (nurses and sterile equipment) and states a consequence (some clinics cannot afford them)." },
+      { type: "info", exam: "<b>In the eAssessment</b> this appears as “<b>Describe</b> one social advantage and one social disadvantage…” (usually 3 marks each). That's two separate P-E-C points: one for, one against." },
+
+      /* ---------- Mission 4: evidence and sources ---------- */
+      { type: "info", mission: { n: 4, title: "Use evidence and document your sources", lesson: "Criterion D · strands iii and iv",
+        story: "An opinion without evidence gets few marks. Show where your facts come from, and give numbers with units." } },
+      { type: "info", learn: { h: "Quote it, then cite it",
+        html: "<ol class='steps'><li><b>Quote a number or fact</b> with its unit: “909,200 m³ of water per day”.</li><li><b>Say where it comes from</b>: “Source B shows…” or “According to Jones and others (2019)…”.</li><li><b>Explain what it means</b> for your argument: “…so this one plant could supply…”.</li></ol>"
+          + "<div class='wex'><b>Worked example: using your own carrot data from Pack 2</b>The carrot results show that carrot cylinders lost 12.9% of their mass in 2.5% salt solution. This means that watering crops with very salty well water could pull water out of the root cells by osmosis and damage the crop.</div>"
+          + "<p><b>Strand iv: documenting a source.</b> A reference gives the <b>author</b>, the <b>year</b>, the <b>title</b>, and <b>where</b> it was published (a journal, website or newspaper):</p><div class='frame'>Jones, E. and others (2019). <i>The state of desalination and brine production: a global outlook.</i> Science of the Total Environment.</div>"
+          + "<div class='mist'><b>Not good enough</b><ul><li>“<i>Google says…</i>” or “<i>the internet</i>”: that is not a source.</li><li>A number with no unit: “909,200 a day” of what?</li></ul></div>" } },
+      { id: "w3r6", type: "mcq", marks: 1,
+        prompt: "Which sentence uses <b>evidence</b> best?",
+        options: ["Salty water is bad for crops.", "Salty water is bad for crops because of osmosis.", "Our Pack 2 results show that carrot cylinders lost 12.9% of their mass in 2.5% salt solution, so irrigating with very salty water could make crops lose water by osmosis and wilt.", "I think farmers should not use salty water."], answer: 2,
+        explain: "It quotes a number with its unit, says where the number comes from, and explains what it means." },
+      { id: "w3r7", type: "match", marks: 4,
+        prompt: "<b>Identify</b> each part of this reference: <i>Jones, E. and others (2019). The state of desalination and brine production: a global outlook. Science of the Total Environment.</i>",
+        head: ["Part of the reference", "What it is"],
+        options: ["the author", "the year", "the title", "where it was published"],
+        rows: [
+          { label: "Jones, E. and others", answer: "the author" },
+          { label: "(2019)", answer: "the year" },
+          { label: "The state of desalination and brine production: a global outlook", answer: "the title" },
+          { label: "Science of the Total Environment", answer: "where it was published" }
+        ] },
+      { type: "info", exam: "<b>In the eAssessment</b>, questions say “Use evidence from the sources” or “Using information from this task and your wider MYP studies…”. Name the source each time you use it, e.g. “Source C shows…”." },
+
+      /* ---------- Mission 5: discuss, evaluate, conclude ---------- */
+      { type: "info", mission: { n: 5, title: "Discuss, evaluate and conclude", lesson: "Criterion D · strand ii",
+        story: "The big question at the end needs a plan. Without one, students run out of time or forget a bullet point." } },
+      { type: "info", learn: { h: "Plan the long answer in 5 steps",
+        html: "<ol class='steps'><li><b>Introduce:</b> what is the issue, and what science is used? (1–2 sentences)</li><li><b>Advantages:</b> P-E-C for each bullet point in the question (social, economic, environmental…).</li><li><b>Disadvantages:</b> P-E-C for each bullet point.</li><li><b>Weigh them up:</b> which points matter most, and why? Use “However…”, “On the other hand…”, “This is more important because…”.</li><li><b>Conclude:</b> give your judgement, the main reason for it, and a recommendation or condition.</li></ol>"
+          + "<div class='frame'>Overall, I think <span class='p1'>[your judgement]</span>, because <span class='p2'>[the strongest evidence]</span>. However, <span class='p3'>[the main problem]</span>, so <span class='p4'>[a recommendation that reduces the problem]</span>.</div>"
+          + "<div class='wex'><b>Worked example conclusion: ORS</b>Overall, I think ORS should be the first treatment for dehydrated children, because it is cheap and can be given at home, which saves lives where hospitals are far away. However, it only works if families have clean water, so governments should provide clean water and ORS packets together.</div>"
+          + "<div class='mist'><b>Weak conclusions</b><ul><li>“<i>In conclusion, there are advantages and disadvantages.</i>” There's no judgement.</li><li>“<i>I think it is good.</i>” There's no reason and no recommendation.</li></ul></div>" } },
+      { id: "w3r8", type: "match", marks: 5,
+        prompt: "Put the plan for a long criterion D answer in the right order.",
+        head: ["Step", "What to write"],
+        options: ["Introduce the issue and the science used", "Advantages, each with evidence", "Disadvantages, each with evidence", "Weigh them up: which matter most, and why", "Conclusion: judgement, reason and recommendation"],
+        rows: [
+          { label: "Step 1", answer: "Introduce the issue and the science used" },
+          { label: "Step 2", answer: "Advantages, each with evidence" },
+          { label: "Step 3", answer: "Disadvantages, each with evidence" },
+          { label: "Step 4", answer: "Weigh them up: which matter most, and why" },
+          { label: "Step 5", answer: "Conclusion: judgement, reason and recommendation" }
+        ] },
+      { id: "w3r9", type: "mcq", marks: 1,
+        prompt: "Which is the best <b>conclusion</b>?",
+        options: ["In conclusion, there are advantages and disadvantages.", "I think drips are good.", "Overall, drips should be used for severely dehydrated patients, because they work fastest when a patient cannot drink. However, they are expensive and need trained staff, so ORS should be used first for mild cases.", "Drips use 0.9% salt solution because it is isotonic."], answer: 2,
+        explain: "It gives a clear judgement, the main reason, the main problem, and a recommendation." },
+      { type: "info", exam: "<b>In the eAssessment</b> this is the last and biggest question: “<b>Discuss and evaluate</b>…” with bullet points (8–13 marks). Markschemes give marks for each bullet point, plus marks for a clear structure and a balanced, justified conclusion." }
+    ]
+  },
+  {
+    crit: "D", name: "Reflecting on the impacts of science: water for the UAE",
+    tests: "Use the skills workshop to explain how reverse osmosis makes drinking water, and discuss its implications for the UAE.",
+    tip: "Name the source every time you use a fact (“Source B shows…”). Answer every bullet point, look at both sides, and end with a justified conclusion.",
+    items: [
+      { type: "info",
+        html: "<p>This task is set in the global context of <b>globalization and sustainability</b>. The UAE has very little rain and few rivers, so most of its drinking water is made from seawater. This is called <b>desalination</b>. Older plants boil seawater (thermal desalination). Newer plants use <b>reverse osmosis</b>. Study Sources A–D, then answer D1–D9.</p>"
+          + "<p><b>Source A: How reverse osmosis works</b></p>"
+          + "<svg viewBox='0 0 640 250' role='img' aria-label='Diagram of reverse osmosis: high pressure pushes water from seawater through a partially permeable membrane into a fresh water tank, leaving salty brine behind' style='width:100%;max-width:640px;height:auto;display:block;margin:6px 0 10px'>"
+          + "<rect x='20' y='40' width='600' height='170' rx='12' fill='none' stroke='currentColor' stroke-width='2'/>"
+          + "<rect x='22' y='42' width='296' height='166' rx='10' fill='#2f7fb8' fill-opacity='.18'/>"
+          + "<rect x='322' y='42' width='296' height='166' rx='10' fill='#2f7fb8' fill-opacity='.06'/>"
+          + "<line x1='320' y1='40' x2='320' y2='210' stroke='currentColor' stroke-width='4' stroke-dasharray='8 6'/>"
+          + "<g fill='#c0392b'><circle cx='70' cy='90' r='6'/><circle cx='120' cy='150' r='6'/><circle cx='180' cy='100' r='6'/><circle cx='230' cy='170' r='6'/><circle cx='270' cy='80' r='6'/><circle cx='95' cy='185' r='6'/><circle cx='210' cy='130' r='6'/><circle cx='290' cy='140' r='6'/></g>"
+          + "<g fill='#2f7fb8'><circle cx='150' cy='70' r='4'/><circle cx='60' cy='130' r='4'/><circle cx='250' cy='120' r='4'/><circle cx='300' cy='190' r='4'/><circle cx='380' cy='90' r='4'/><circle cx='450' cy='150' r='4'/><circle cx='520' cy='100' r='4'/><circle cx='560' cy='170' r='4'/><circle cx='410' cy='185' r='4'/><circle cx='590' cy='70' r='4'/></g>"
+          + "<g stroke='#2f7fb8' stroke-width='3' fill='#2f7fb8'><line x1='270' y1='110' x2='360' y2='110'/><path d='M360 104 L372 110 L360 116 Z'/><line x1='270' y1='160' x2='360' y2='160'/><path d='M360 154 L372 160 L360 166 Z'/></g>"
+          + "<g stroke='currentColor' stroke-width='3' fill='currentColor'><line x1='10' y1='125' x2='60' y2='125'/><path d='M60 118 L74 125 L60 132 Z'/></g>"
+          + "<text x='170' y='30' text-anchor='middle' font-size='15' font-weight='700' fill='currentColor'>Seawater + high pressure</text>"
+          + "<text x='470' y='30' text-anchor='middle' font-size='15' font-weight='700' fill='currentColor'>Fresh drinking water</text>"
+          + "<text x='320' y='232' text-anchor='middle' font-size='13' fill='currentColor'>partially permeable membrane</text>"
+          + "<text x='40' y='232' font-size='12' fill='#c0392b'>● salt (cannot pass)</text><text x='500' y='232' font-size='12' fill='#2f7fb8'>● water</text>"
+          + "</svg>"
+          + "<p>In normal osmosis, water moves from a dilute solution to a concentrated solution through a partially permeable membrane. In <b>reverse osmosis</b>, pumps push seawater against a membrane at very high pressure. This forces <b>water</b> molecules to move the opposite way, out of the concentrated seawater and into the fresh water side. Salt particles are too big to pass through the membrane, so they stay behind in a very salty waste called <b>brine</b>, which is usually piped back into the sea.</p>"
+          + "<p><b>Source B: Desalination in Abu Dhabi</b></p><div class='tbl'><table><tbody>"
+          + "<tr><td>Share of Abu Dhabi's total water that comes from desalination</td><td>30%</td></tr>"
+          + "<tr><td>Abu Dhabi's share of all desalinated water in the world</td><td>about 9%</td></tr>"
+          + "<tr><td>Desalinated water made by thermal methods (2019)</td><td>84%</td></tr>"
+          + "<tr><td>Desalinated water made by reverse osmosis (2019)</td><td>16%</td></tr>"
+          + "<tr><td>Taweelah reverse osmosis plant, opened 2022 (world's largest)</td><td>909,200 m³ of water per day, enough for over 350,000 households; cost Dh3.2 billion</td></tr>"
+          + "<tr><td>Plan for 2030</td><td>90% of desalinated water made by reverse osmosis, cutting the carbon emissions from making water by 88%</td></tr></tbody></table></div>"
+          + "<p class='note'>Sources: Abu Dhabi Department of Energy (2021); The National (2022); Gulf Business (2023); Gulf Construction Online (2023).</p>"
+          + "<p><b>Source C: Energy needed to make 1 m³ of fresh water</b></p><div class='tbl'><table><thead><tr><th>Method</th><th>Energy used (kWh per m³)</th></tr></thead><tbody>"
+          + "<tr><td>Multi-stage flash (thermal: boiling seawater)</td><td>13.5–25.6</td></tr><tr><td>Multi-effect distillation (thermal)</td><td>6.5–11.0</td></tr><tr><td>Reverse osmosis (membrane)</td><td>3.0–5.5</td></tr></tbody></table></div>"
+          + "<p class='note'>Source: The Water Network (n.d.). Seawater desalination success story. In the UAE, most of this energy comes from burning natural gas, which releases carbon dioxide.</p>"
+          + "<p><b>Source D: The brine problem</b></p><ul><li>Worldwide, desalination plants make on average <b>1.5 litres of brine for every 1 litre</b> of fresh water: about <b>142 million m³ of brine every day</b>.</li><li>The UAE produces about <b>20%</b> of all the brine in the world.</li><li>Most brine is piped back into the sea near the coast. It is much saltier than seawater, can lower the oxygen in the water and can contain chemicals such as chlorine and copper from the cleaning process. This harms animals living on the seabed.</li><li>Scientists are testing ways to use brine instead: recovering salts and metals from it, or using it in fish farms.</li></ul>"
+          + "<p class='note'>Source: Jones, E. and others (2019). The state of desalination and brine production: a global outlook. Science of the Total Environment.</p>" },
+      { type: "info", guide: {
+        title: "Your criterion D checklist",
+        intro: "Answer D1–D9 in order. They follow the five missions of the skills workshop.",
+        steps: [
+          { h: "How the science is applied", strand: "Strand i", what: "Problem → science → how it works (osmosis, pressure, membrane) → how it solves the problem.",
+            starters: ["The problem is that the UAE…", "Reverse osmosis works because…"] },
+          { h: "Implications", strand: "Strand ii", what: "For each type asked (environmental, economic, social, ethical): one advantage and one disadvantage, each with Point + Evidence + Consequence.",
+            starters: ["One environmental advantage is… Source C shows…", "This means that…"] },
+          { h: "Evidence and sources", strand: "Strands iii–iv", what: "Quote numbers with units and name the source every time. Use key science words correctly.",
+            starters: ["Source B shows that…", "According to Jones and others (2019)…"] },
+          { h: "Discuss, evaluate, conclude", strand: "Strand ii", what: "Plan in 5 steps. Weigh up the points, then give a judgement, the main reason and a recommendation.",
+            starters: ["On the other hand…", "Overall, I think…, because… However…, so…"] }
+        ],
+        ladder: [
+          { lv: "1–2", verb: "Outlines", d: "how science is used, and states an implication" },
+          { lv: "3–4", verb: "Summarizes", d: "how science is used, with one or two implications, and some evidence" },
+          { lv: "5–6", verb: "Describes", d: "how science solves the problem and describes implications on both sides, with sources" },
+          { lv: "7–8", verb: "Explains", d: "how the science works, discusses and evaluates several implications with evidence, and reaches a justified conclusion" }
+        ],
+        checklist: ["Key science words: osmosis, partially permeable membrane, concentration, pressure", "Both sides for every implication", "A number with a unit and a source name in every paragraph", "A conclusion with a judgement, a reason and a recommendation"]
+      } },
+
+      { id: "w3d1", type: "mcq", marks: 1,
+        prompt: "In reverse osmosis (Source A), which way do <b>water</b> molecules move through the membrane?",
+        options: ["From the fresh water side into the seawater, by normal osmosis", "From the seawater into the fresh water side, because high pressure pushes them", "Salt moves from the seawater into the fresh water side", "Water does not move; only salt moves"], answer: 1,
+        explain: "High pressure forces water out of the concentrated seawater into the dilute side. This is the opposite direction to normal osmosis, which is why it is called reverse osmosis. Salt is too big to pass through the membrane." },
+
+      { id: "w3d2", type: "text", marks: 3, minWords: 45,
+        prompt: "<b>Describe</b> the ways in which science has been applied in the UAE to produce drinking water from seawater. Use Source A.",
+        hint: "The problem is that the UAE … . Scientists use reverse osmosis: pumps push seawater against a … membrane at high … . This forces … molecules to move from the … seawater to the … side, while salt … . This solves the problem because … .",
+        model: "The UAE has very little rain and few rivers, so it does not have enough fresh water for its population (1). In reverse osmosis plants, pumps push seawater against a partially permeable membrane at very high pressure, which forces water molecules out of the concentrated seawater into the fresh water side, the opposite direction to normal osmosis (1). Salt particles are too big to pass through the membrane, so they stay behind in the brine, and the water that comes through is fresh enough to drink. This means the country can make drinking water from the sea, e.g. Taweelah makes 909,200 m³ per day (1).",
+        points: ["The problem: little rain/fresh water in the UAE", "How it works: high pressure pushes water through a partially permeable membrane, opposite to osmosis", "Salt stays behind as brine → fresh drinking water (with evidence)"] },
+
+      { id: "w3d3", type: "text", marks: 3, minWords: 40,
+        prompt: "Brine is piped back into the sea near the coast (Source D). <b>Explain</b>, using osmosis, why brine can harm animals living on the seabed near a desalination plant.",
+        hint: "Brine is … compared with the cells of sea animals, so the water concentration is … outside their cells. Water moves … of their cells by … through the partially permeable membrane, so … . Source D also says brine can … .",
+        model: "Brine is much saltier than normal seawater, so it is hypertonic compared with the cells of animals living on the seabed (1). The water concentration is lower outside their cells, so water moves out of their cells by osmosis through the partially permeable membrane, and the cells shrink and cannot work properly (1). Source D also says brine can lower the oxygen in the water and contain chemicals such as chlorine and copper, which can harm or kill seabed animals (1).",
+        points: ["Brine is hypertonic / lower water concentration than the animals' cells", "Water leaves the cells by osmosis → cells shrink / damaged", "Extra harm from Source D: less oxygen or chemicals"] },
+
+      { id: "w3d4", type: "num", marks: 1, min: 4.4, max: 4.6, unit: "times",
+        prompt: "Use the <b>lowest</b> value for each method in Source C. <b>Calculate</b> how many times more energy multi-stage flash uses than reverse osmosis (1 d.p.).",
+        explain: "13.5 ÷ 3.0 = 4.5 times. So even at its best, the thermal method needs about four and a half times as much energy." },
+
+      { id: "w3d5", type: "text", marks: 3, minWords: 45,
+        prompt: "<b>Describe</b> one <b>environmental</b> advantage and one <b>environmental</b> disadvantage of making more of the UAE's water by reverse osmosis.",
+        hint: "Advantage: Reverse osmosis uses … energy than thermal methods (Source C shows …). This means that … . Disadvantage: Reverse osmosis still produces … (Source D shows …). This means that … .",
+        model: "An environmental advantage is that reverse osmosis uses much less energy than thermal desalination: 3.0–5.5 kWh per m³ compared with 13.5–25.6 kWh per m³ for multi-stage flash (Source C). Because most of this energy comes from burning natural gas, less carbon dioxide is released, and Source B says the 2030 plan will cut emissions from making water by 88% (1.5). An environmental disadvantage is that reverse osmosis still makes brine, about 1.5 litres for every litre of fresh water worldwide (Source D). When it is piped back into the sea, it raises the salt level, lowers oxygen and can carry chemicals, which harms animals living on the seabed (1.5).",
+        points: ["Advantage with evidence: less energy (Source C) → less CO₂ (Source B, 88%)", "Disadvantage with evidence: brine (Source D, 1.5 L per L)", "Consequence for the environment of each (climate change / harm to marine life)"] },
+
+      { id: "w3d6", type: "text", marks: 3, minWords: 45,
+        prompt: "<b>Describe</b> one <b>economic</b> advantage and one <b>economic</b> disadvantage of building reverse osmosis plants like Taweelah.",
+        hint: "Advantage: … uses less energy, so … (Source C). This means that … . Disadvantage: building the plant costs … (Source B), and … . This means that … .",
+        model: "An economic advantage is that reverse osmosis needs much less energy per m³ of water (Source C), and energy is the biggest running cost, so each litre of water is cheaper to produce. This saves money for the government and water companies, and the savings can be passed to families (1.5). An economic disadvantage is that the plants are very expensive to build: Taweelah cost Dh3.2 billion (Source B). The membranes also need cleaning and replacing, so the money must be found before any water is produced (1.5).",
+        points: ["Advantage with evidence: lower energy cost per m³ (Source C)", "Disadvantage with evidence: high building cost, Dh3.2 billion (Source B) / membrane upkeep", "Consequence of each (who pays / who saves)"] },
+
+      { id: "w3d7", type: "text", marks: 3, minWords: 40,
+        prompt: "<b>Describe</b> one <b>social</b> implication and one <b>ethical</b> implication of the UAE depending on desalination for its drinking water.",
+        hint: "Social: Desalination supplies … (Source B shows …). This means that people … . Ethical: Is it fair that … ? For example, the brine harms … / countries that cannot afford … .",
+        model: "Social: desalination gives a reliable supply of safe drinking water in a desert country. Source B shows the Taweelah plant alone can supply over 350,000 households, which means people can live, work and stay healthy in UAE cities even though there is very little rain (1.5). Ethical: it raises the question of whether it is fair to damage marine life with brine to provide water for people (Source D says the UAE makes about 20% of the world's brine). It is also unfair that poorer countries that are short of water cannot afford plants that cost billions of dirhams (1.5).",
+        points: ["Social implication with evidence (reliable safe water / 350,000 households)", "Ethical implication: fairness to marine life or to poorer countries, with evidence"] },
+
+      { id: "w3d8", type: "mcq", marks: 1,
+        prompt: "Which of these is a correctly <b>documented</b> source (strand iv)?",
+        options: ["The internet (2019)", "Jones, E. and others (2019). The state of desalination and brine production: a global outlook. Science of the Total Environment.", "A study about brine", "Science of the Total Environment"], answer: 1,
+        explain: "A reference needs the author, the year, the title and where it was published." },
+
+      { id: "w3d9", type: "text", marks: 8, minWords: 180,
+        prompt: "The UAE plans to make 90% of its desalinated water by reverse osmosis by 2030 (Source B). Using information from this task and your wider MYP studies, <b>discuss and evaluate</b> this plan. In your answer, include:<ul><li>how reverse osmosis uses the science of osmosis to make drinking water</li><li>the environmental implications</li><li>the economic implications</li><li>a social or ethical implication</li><li>a concluding statement that justifies your opinion, with one recommendation</li></ul>",
+        hint: "Use the 5-step plan. <b>1</b> Introduce: the UAE needs water because… Reverse osmosis works by… <b>2</b> Advantages, with evidence: Source C shows… This means that… <b>3</b> Disadvantages, with evidence: However, Source D shows… <b>4</b> Weigh them up: The most important point is… because… <b>5</b> Conclude: Overall, I think the plan is…, because… However…, so I recommend…",
+        model: "The UAE has very little rain, so it depends on desalination: 30% of Abu Dhabi's total water comes from it (Source B). Reverse osmosis uses high pressure to push water from seawater through a partially permeable membrane, the opposite of normal osmosis, while salt stays behind as brine (Source A) (1).\n\nEnvironmental: the main advantage is energy. Reverse osmosis uses 3.0–5.5 kWh per m³, compared with 13.5–25.6 kWh per m³ for multi-stage flash (Source C), and most UAE energy comes from natural gas, so the plan will cut emissions from making water by 88% (Source B). This helps the UAE reduce climate change (1). However, reverse osmosis still makes brine. Worldwide, plants make about 1.5 litres of brine for every litre of fresh water, and the UAE makes about 20% of the world's brine (Source D). Brine is hypertonic to the cells of seabed animals, so they lose water by osmosis, and it can also lower oxygen and carry chemicals (1).\n\nEconomic: lower energy use means each m³ of water is cheaper to make, which saves money for the country (1). On the other hand, the plants are very expensive to build, as Taweelah cost Dh3.2 billion (Source B), and membranes must be cleaned and replaced (1).\n\nSocial and ethical: the plan gives a reliable, safe supply of drinking water. Taweelah alone can supply over 350,000 households (Source B), so people can live healthily in a desert country (1). Ethically, it is not fair if marine life is harmed by brine so that people can have water, especially as the UAE produces so much of the world's brine (1).\n\nWeighing these up, the energy and carbon savings are very large and affect the whole country and the climate, while the brine problem is local and can be reduced. Overall, I think the plan is a good one, because reverse osmosis gives the same safe water using about four times less energy than the thermal method (1). However, the brine must be managed, so I recommend that the UAE spreads the brine out far from the coast and invests in recovering salts from it or using it in fish farms, as Source D suggests (1).",
+        points: ["How RO uses osmosis/pressure/membrane to make drinking water", "Environmental advantage with evidence (energy / 88% emissions)", "Environmental disadvantage with evidence (brine, osmosis harm to sea life)", "Economic advantage with evidence", "Economic disadvantage with evidence (Dh3.2 billion)", "Social or ethical implication with evidence", "Points weighed up: balanced evaluation", "Justified conclusion with a recommendation"] }
+    ]
+  }
+  ]
 }
 
 
