@@ -565,7 +565,7 @@ window.REVISION_WEEKS = [
 },
 {
   id: "w3",
-  title: "Reflecting on science: desalination and osmosis",
+  title: "Reflecting on science: saving lives with stem cells",
   topic: "Unit 1: Cells",
   lessons: "Unit 1 – Lessons 3–7 · criterion D practice",
   opens: "2026-11-16T07:00:00+04:00",
@@ -575,7 +575,7 @@ window.REVISION_WEEKS = [
   {
     crit: "R", name: "Skills workshop: how to write criterion D", short: "skills workshop",
     tests: "Step-by-step lessons on how to write each part of criterion D, with quick marked checks.",
-    how: "Each mission teaches <b>one skill</b> for criterion D. Read the <b>Learn</b> card, then answer the <b>Check yourself</b> questions. Finish each mission to unlock the next one. You will use every skill in the desalination task afterwards.",
+    how: "Each mission teaches <b>one skill</b> for criterion D. Read the <b>Learn</b> card, then answer the <b>Check yourself</b> questions. Finish each mission to unlock the next one. You will use every skill in the stem cell task afterwards.",
     items: [
       /* ---------- Mission 1: what criterion D asks ---------- */
       { type: "info", mission: { n: 1, title: "What criterion D asks you to do", lesson: "Criterion D · all strands",
@@ -617,7 +617,7 @@ window.REVISION_WEEKS = [
         prompt: "Which answer best <b>explains how science is applied</b> in a hospital drip?",
         options: ["Drips are used in hospitals to help patients.", "A drip contains 0.9% salt solution, which is safe.", "Dehydrated patients need water quickly. A drip puts 0.9% salt solution straight into the blood. It is isotonic with red blood cells, so there is no net movement of water and the cells keep their shape, but the blood volume is restored.", "Pure water would make red blood cells burst."], answer: 2,
         explain: "It has all four parts: the problem (dehydration), the science used (0.9% salt drip), how it works (isotonic, so there is no net osmosis) and how it solves the problem (restores blood volume safely)." },
-      { type: "info", exam: "<b>In the eAssessment</b> this appears as “<b>Describe</b> the ways in which science has been applied to…” (usually 3–4 marks). Use the 4-part frame and include at least one key science word from class, such as <i>osmosis</i>, <i>partially permeable membrane</i> or <i>concentration</i>." },
+      { type: "info", exam: "<b>In the eAssessment</b> this appears as “<b>Describe</b> the ways in which science has been applied to…” (usually 3–4 marks). Use the 4-part frame and include at least one key science word from class, such as <i>osmosis</i>, <i>partially permeable membrane</i>, <i>stem cell</i> or <i>differentiate</i>." },
 
       /* ---------- Mission 3: implications ---------- */
       { type: "info", mission: { n: 3, title: "Implications: advantages and disadvantages", lesson: "Criterion D · strand ii",
@@ -651,23 +651,23 @@ window.REVISION_WEEKS = [
       { type: "info", mission: { n: 4, title: "Use evidence and document your sources", lesson: "Criterion D · strands iii and iv",
         story: "An opinion without evidence gets few marks. Show where your facts come from, and give numbers with units." } },
       { type: "info", learn: { h: "Quote it, then cite it",
-        html: "<ol class='steps'><li><b>Quote a number or fact</b> with its unit: “909,200 m³ of water per day”.</li><li><b>Say where it comes from</b>: “Source B shows…” or “According to Jones and others (2019)…”.</li><li><b>Explain what it means</b> for your argument: “…so this one plant could supply…”.</li></ol>"
+        html: "<ol class='steps'><li><b>Quote a number or fact</b> with its unit: “lost 12.9% of their mass”.</li><li><b>Say where it comes from</b>: “Source B shows…” or “According to the World Health Organization (2024)…”.</li><li><b>Explain what it means</b> for your argument: “…so this means that…”.</li></ol>"
           + "<div class='wex'><b>Worked example: using your own carrot data from Pack 2</b>The carrot results show that carrot cylinders lost 12.9% of their mass in 2.5% salt solution. This means that watering crops with very salty well water could pull water out of the root cells by osmosis and damage the crop.</div>"
-          + "<p><b>Strand iv: documenting a source.</b> A reference gives the <b>author</b>, the <b>year</b>, the <b>title</b>, and <b>where</b> it was published (a journal, website or newspaper):</p><div class='frame'>Jones, E. and others (2019). <i>The state of desalination and brine production: a global outlook.</i> Science of the Total Environment.</div>"
-          + "<div class='mist'><b>Not good enough</b><ul><li>“<i>Google says…</i>” or “<i>the internet</i>”: that is not a source.</li><li>A number with no unit: “909,200 a day” of what?</li></ul></div>" } },
+          + "<p><b>Strand iv: documenting a source.</b> A reference gives the <b>author</b>, the <b>year</b>, the <b>title</b>, and <b>where</b> it was published (a journal, website or newspaper):</p><div class='frame'>World Health Organization (2024). <i>Diarrhoeal disease</i> (fact sheet). www.who.int</div>"
+          + "<div class='mist'><b>Not good enough</b><ul><li>“<i>Google says…</i>” or “<i>the internet</i>”: that is not a source.</li><li>A number with no unit: “it lost 12.9” — 12.9 what?</li></ul></div>" } },
       { id: "w3r6", type: "mcq", marks: 1,
         prompt: "Which sentence uses <b>evidence</b> best?",
         options: ["Salty water is bad for crops.", "Salty water is bad for crops because of osmosis.", "Our Pack 2 results show that carrot cylinders lost 12.9% of their mass in 2.5% salt solution, so irrigating with very salty water could make crops lose water by osmosis and wilt.", "I think farmers should not use salty water."], answer: 2,
         explain: "It quotes a number with its unit, says where the number comes from, and explains what it means." },
       { id: "w3r7", type: "match", marks: 4,
-        prompt: "<b>Identify</b> each part of this reference: <i>Jones, E. and others (2019). The state of desalination and brine production: a global outlook. Science of the Total Environment.</i>",
+        prompt: "<b>Identify</b> each part of this reference: <i>World Health Organization (2024). Diarrhoeal disease (fact sheet). www.who.int</i>",
         head: ["Part of the reference", "What it is"],
         options: ["the author", "the year", "the title", "where it was published"],
         rows: [
-          { label: "Jones, E. and others", answer: "the author" },
-          { label: "(2019)", answer: "the year" },
-          { label: "The state of desalination and brine production: a global outlook", answer: "the title" },
-          { label: "Science of the Total Environment", answer: "where it was published" }
+          { label: "World Health Organization", answer: "the author" },
+          { label: "(2024)", answer: "the year" },
+          { label: "Diarrhoeal disease (fact sheet)", answer: "the title" },
+          { label: "www.who.int", answer: "where it was published" }
         ] },
       { type: "info", exam: "<b>In the eAssessment</b>, questions say “Use evidence from the sources” or “Using information from this task and your wider MYP studies…”. Name the source each time you use it, e.g. “Source C shows…”." },
 
@@ -698,112 +698,106 @@ window.REVISION_WEEKS = [
     ]
   },
   {
-    crit: "D", name: "Reflecting on the impacts of science: water for the UAE",
-    tests: "Use the skills workshop to explain how reverse osmosis makes drinking water, and discuss its implications for the UAE.",
-    tip: "Name the source every time you use a fact (“Source B shows…”). Answer every bullet point, look at both sides, and end with a justified conclusion.",
+    crit: "D", name: "Reflecting on the impacts of science: saving lives with stem cells",
+    tests: "Use the skills workshop to explain how cord blood stem cells treat blood diseases, and discuss whether UAE families should bank or donate their baby's cord blood.",
+    tip: "Name the source every time you use a fact (“Source C shows…”). Answer every bullet point, look at both sides, and end with a justified conclusion.",
     items: [
       { type: "info",
-        html: "<p>This task is set in the global context of <b>globalization and sustainability</b>. The UAE has very little rain and few rivers, so most of its drinking water is made from seawater. This is called <b>desalination</b>. Older plants boil seawater (thermal desalination). Newer plants use <b>reverse osmosis</b>. Study Sources A–D, then answer D1–D9.</p>"
-          + "<p><b>Source A: How reverse osmosis works</b></p>"
-          + "<svg viewBox='0 0 640 250' role='img' aria-label='Diagram of reverse osmosis: high pressure pushes water from seawater through a partially permeable membrane into a fresh water tank, leaving salty brine behind' style='width:100%;max-width:640px;height:auto;display:block;margin:6px 0 10px'>"
-          + "<rect x='20' y='40' width='600' height='170' rx='12' fill='none' stroke='currentColor' stroke-width='2'/>"
-          + "<rect x='22' y='42' width='296' height='166' rx='10' fill='#2f7fb8' fill-opacity='.18'/>"
-          + "<rect x='322' y='42' width='296' height='166' rx='10' fill='#2f7fb8' fill-opacity='.06'/>"
-          + "<line x1='320' y1='40' x2='320' y2='210' stroke='currentColor' stroke-width='4' stroke-dasharray='8 6'/>"
-          + "<g fill='#c0392b'><circle cx='70' cy='90' r='6'/><circle cx='120' cy='150' r='6'/><circle cx='180' cy='100' r='6'/><circle cx='230' cy='170' r='6'/><circle cx='270' cy='80' r='6'/><circle cx='95' cy='185' r='6'/><circle cx='210' cy='130' r='6'/><circle cx='290' cy='140' r='6'/></g>"
-          + "<g fill='#2f7fb8'><circle cx='150' cy='70' r='4'/><circle cx='60' cy='130' r='4'/><circle cx='250' cy='120' r='4'/><circle cx='300' cy='190' r='4'/><circle cx='380' cy='90' r='4'/><circle cx='450' cy='150' r='4'/><circle cx='520' cy='100' r='4'/><circle cx='560' cy='170' r='4'/><circle cx='410' cy='185' r='4'/><circle cx='590' cy='70' r='4'/></g>"
-          + "<g stroke='#2f7fb8' stroke-width='3' fill='#2f7fb8'><line x1='270' y1='110' x2='360' y2='110'/><path d='M360 104 L372 110 L360 116 Z'/><line x1='270' y1='160' x2='360' y2='160'/><path d='M360 154 L372 160 L360 166 Z'/></g>"
-          + "<g stroke='currentColor' stroke-width='3' fill='currentColor'><line x1='10' y1='125' x2='60' y2='125'/><path d='M60 118 L74 125 L60 132 Z'/></g>"
-          + "<text x='170' y='30' text-anchor='middle' font-size='15' font-weight='700' fill='currentColor'>Seawater + high pressure</text>"
-          + "<text x='470' y='30' text-anchor='middle' font-size='15' font-weight='700' fill='currentColor'>Fresh drinking water</text>"
-          + "<text x='320' y='232' text-anchor='middle' font-size='13' fill='currentColor'>partially permeable membrane</text>"
-          + "<text x='40' y='232' font-size='12' fill='#c0392b'>● salt (cannot pass)</text><text x='500' y='232' font-size='12' fill='#2f7fb8'>● water</text>"
+        html: "<p>This task is set in the global context of <b>identities and relationships</b>. When a baby is born, the blood left in the umbilical cord is usually thrown away. But this <b>cord blood</b> is full of <b>stem cells</b>, which can be used to treat serious blood diseases. In the UAE, parents can <b>donate</b> it to a public bank for anyone to use, or <b>pay</b> to store it privately for their own family. Study Sources A–D, then answer D1–D9.</p>"
+          + "<p><b>Source A: How stem cells from cord blood treat blood diseases</b></p>"
+          + "<svg viewBox='0 0 640 230' role='img' aria-label='Diagram: a stem cell divides to make more stem cells, and differentiates into specialised cells: red blood cells, white blood cells and platelets' style='width:100%;max-width:640px;height:auto;display:block;margin:6px 0 10px'>"
+          + "<circle cx='110' cy='115' r='42' fill='#8e6bbf' fill-opacity='.25' stroke='#8e6bbf' stroke-width='3'/><circle cx='110' cy='115' r='14' fill='#8e6bbf'/>"
+          + "<text x='110' y='185' text-anchor='middle' font-size='14' font-weight='700' fill='currentColor'>stem cell</text><text x='110' y='203' text-anchor='middle' font-size='12' fill='currentColor'>(unspecialised)</text>"
+          + "<path d='M70 70 C 60 20, 160 20, 150 70' fill='none' stroke='currentColor' stroke-width='2'/><path d='M144 64 L151 74 L156 62 Z' fill='currentColor'/><text x='110' y='22' text-anchor='middle' font-size='12' fill='currentColor'>divides to make more stem cells</text>"
+          + "<g stroke='currentColor' stroke-width='2.5' fill='currentColor'><line x1='160' y1='105' x2='300' y2='50'/><path d='M300 43 L314 47 L303 57 Z'/><line x1='160' y1='115' x2='300' y2='115'/><path d='M300 108 L314 115 L300 122 Z'/><line x1='160' y1='125' x2='300' y2='180'/><path d='M303 173 L314 183 L300 187 Z'/></g>"
+          + "<text x='235' y='100' text-anchor='middle' font-size='12' fill='currentColor'>differentiates</text>"
+          + "<ellipse cx='350' cy='48' rx='28' ry='18' fill='#c0392b' fill-opacity='.85'/><ellipse cx='350' cy='48' rx='12' ry='6' fill='#ffffff' fill-opacity='.35'/><text x='390' y='53' font-size='14' fill='currentColor'>red blood cell: carries oxygen</text>"
+          + "<circle cx='350' cy='115' r='22' fill='#2f7fb8' fill-opacity='.3' stroke='#2f7fb8' stroke-width='2.5'/><path d='M340 108 q10 -10 20 0 q-8 6 0 14 q-10 8 -20 0 q8 -6 0 -14' fill='#2f7fb8'/><text x='390' y='120' font-size='14' fill='currentColor'>white blood cell: fights infection</text>"
+          + "<g fill='#b8860b'><circle cx='340' cy='182' r='6'/><circle cx='356' cy='176' r='5'/><circle cx='358' cy='191' r='6'/></g><text x='390' y='187' font-size='14' fill='currentColor'>platelets: help blood to clot</text>"
           + "</svg>"
-          + "<p>In normal osmosis, water moves from a dilute solution to a concentrated solution through a partially permeable membrane. In <b>reverse osmosis</b>, pumps push seawater against a membrane at very high pressure. This forces <b>water</b> molecules to move the opposite way, out of the concentrated seawater and into the fresh water side. Salt particles are too big to pass through the membrane, so they stay behind in a very salty waste called <b>brine</b>, which is usually piped back into the sea.</p>"
-          + "<p><b>Source B: Desalination in Abu Dhabi</b></p><div class='tbl'><table><tbody>"
-          + "<tr><td>Share of Abu Dhabi's total water that comes from desalination</td><td>30%</td></tr>"
-          + "<tr><td>Abu Dhabi's share of all desalinated water in the world</td><td>about 9%</td></tr>"
-          + "<tr><td>Desalinated water made by thermal methods (2019)</td><td>84%</td></tr>"
-          + "<tr><td>Desalinated water made by reverse osmosis (2019)</td><td>16%</td></tr>"
-          + "<tr><td>Taweelah reverse osmosis plant, opened 2022 (world's largest)</td><td>909,200 m³ of water per day, enough for over 350,000 households; cost Dh3.2 billion</td></tr>"
-          + "<tr><td>Plan for 2030</td><td>90% of desalinated water made by reverse osmosis, cutting the carbon emissions from making water by 88%</td></tr></tbody></table></div>"
-          + "<p class='note'>Sources: Abu Dhabi Department of Energy (2021); The National (2022); Gulf Business (2023); Gulf Construction Online (2023).</p>"
-          + "<p><b>Source C: Energy needed to make 1 m³ of fresh water</b></p><div class='tbl'><table><thead><tr><th>Method</th><th>Energy used (kWh per m³)</th></tr></thead><tbody>"
-          + "<tr><td>Multi-stage flash (thermal: boiling seawater)</td><td>13.5–25.6</td></tr><tr><td>Multi-effect distillation (thermal)</td><td>6.5–11.0</td></tr><tr><td>Reverse osmosis (membrane)</td><td>3.0–5.5</td></tr></tbody></table></div>"
-          + "<p class='note'>Source: The Water Network (n.d.). Seawater desalination success story. In the UAE, most of this energy comes from burning natural gas, which releases carbon dioxide.</p>"
-          + "<p><b>Source D: The brine problem</b></p><ul><li>Worldwide, desalination plants make on average <b>1.5 litres of brine for every 1 litre</b> of fresh water: about <b>142 million m³ of brine every day</b>.</li><li>The UAE produces about <b>20%</b> of all the brine in the world.</li><li>Most brine is piped back into the sea near the coast. It is much saltier than seawater, can lower the oxygen in the water and can contain chemicals such as chlorine and copper from the cleaning process. This harms animals living on the seabed.</li><li>Scientists are testing ways to use brine instead: recovering salts and metals from it, or using it in fish farms.</li></ul>"
-          + "<p class='note'>Source: Jones, E. and others (2019). The state of desalination and brine production: a global outlook. Science of the Total Environment.</p>" },
+          + "<p>A <b>stem cell</b> is an unspecialised cell. It can divide to make more stem cells, and it can <b>differentiate</b> (become specialised) into other types of cell. Stem cells from cord blood can become red blood cells, white blood cells and platelets. In a <b>stem cell transplant</b>, healthy stem cells from a matching donor are put into the patient's blood. They settle in the bone marrow and start making healthy blood cells to replace the faulty ones. Cord blood stem cells can be used to treat <b>more than 80 diseases</b>, including leukaemia, thalassaemia and sickle cell anaemia.</p>"
+          + "<p class='note'>Sources: Dubai Media Office (2020); Abu Dhabi Media Office (2025).</p>"
+          + "<p><b>Source B: Thalassaemia in the UAE</b></p><ul><li>Thalassaemia is an <b>inherited</b> blood disorder: the body cannot make enough healthy haemoglobin, the protein in red blood cells that carries oxygen. Many patients need blood transfusions every few weeks for life.</li><li>At least <b>8.5%</b> of the UAE population carry the gene for thalassaemia, often without knowing.</li><li>If both parents are carriers, each child has a <b>25%</b> chance of being born with the disease.</li><li>A <b>stem cell (bone marrow) transplant</b> is the only treatment that can cure thalassaemia.</li></ul>"
+          + "<p class='note'>Sources: Khaleej Times (2023), quoting the UAE Ministry of Health and Prevention; The National (2016).</p>"
+          + "<p><b>Source C: Two ways to store cord blood in the UAE</b></p><div class='tbl'><table><thead><tr><th></th><th>Public bank (donation)</th><th>Private (family) bank</th></tr></thead><tbody>"
+          + "<tr><td>Who can use it?</td><td>Any patient who is a good match</td><td>Only the baby and their family</td></tr>"
+          + "<tr><td>Cost to the family</td><td>Free</td><td>AED 9,000 at the government centre in Dubai; AED 20,000–38,000 at other private banks</td></tr>"
+          + "<tr><td>How long it is stored</td><td>Up to 30 years</td><td>Up to 30 years</td></tr></tbody></table></div>"
+          + "<p>The Dubai Cord Blood and Research Centre (opened 2006) offers both. By 2020 it had stored about <b>8,000</b> cord blood units, and <b>20 patients</b> had been treated with them for diseases including thalassaemia, sickle cell anaemia and leukaemia. The centre wants more families to donate, to build a public registry with the <b>many different ethnic groups</b> living in the UAE, because transplants work best when donor and patient are a close match.</p>"
+          + "<p class='note'>Sources: Dubai Health Authority (2021). DCRC service catalogue; Dubai Media Office (2020); Aletihad (2025).</p>"
+          + "<p><b>Source D: What doctors' organisations say</b></p><ul><li>The chance that a child will ever need their <b>own</b> stored cord blood is estimated at between <b>1 in 400 and 1 in 200,000</b>.</li><li>A child's own cord blood usually <b>cannot</b> treat an inherited disease such as thalassaemia, because their stem cells carry the same faulty gene. A healthy, matching donor is needed instead.</li><li>The American Academy of Pediatrics <b>encourages</b> parents to donate cord blood to public banks. It advises private banking only when an older brother or sister already has a disease that cord blood could treat.</li><li>Worldwide, more than <b>60,000</b> transplants have been carried out using cord blood stem cells.</li></ul>"
+          + "<p class='note'>Sources: American Academy of Pediatrics, reported by WebMD (n.d.) and NewYork-Presbyterian (2007); WAM (2025).</p>" },
       { type: "info", guide: {
         title: "Your criterion D checklist",
         intro: "Answer D1–D9 in order. They follow the five missions of the skills workshop.",
         steps: [
-          { h: "How the science is applied", strand: "Strand i", what: "Problem → science → how it works (osmosis, pressure, membrane) → how it solves the problem.",
-            starters: ["The problem is that the UAE…", "Reverse osmosis works because…"] },
-          { h: "Implications", strand: "Strand ii", what: "For each type asked (environmental, economic, social, ethical): one advantage and one disadvantage, each with Point + Evidence + Consequence.",
-            starters: ["One environmental advantage is… Source C shows…", "This means that…"] },
-          { h: "Evidence and sources", strand: "Strands iii–iv", what: "Quote numbers with units and name the source every time. Use key science words correctly.",
-            starters: ["Source B shows that…", "According to Jones and others (2019)…"] },
+          { h: "How the science is applied", strand: "Strand i", what: "Problem → science → how it works (stem cells divide and differentiate) → how it solves the problem.",
+            starters: ["The problem is that thalassaemia…", "Stem cells are unspecialised, so…"] },
+          { h: "Implications", strand: "Strand ii", what: "For each type asked (economic, social, ethical): one advantage and one disadvantage, each with Point + Evidence + Consequence.",
+            starters: ["One economic advantage is… Source C shows…", "This means that…"] },
+          { h: "Evidence and sources", strand: "Strands iii–iv", what: "Quote numbers and name the source every time. Use key science words correctly: stem cell, differentiate, specialised, transplant, inherited.",
+            starters: ["Source B shows that…", "According to the American Academy of Pediatrics…"] },
           { h: "Discuss, evaluate, conclude", strand: "Strand ii", what: "Plan in 5 steps. Weigh up the points, then give a judgement, the main reason and a recommendation.",
             starters: ["On the other hand…", "Overall, I think…, because… However…, so…"] }
         ],
         ladder: [
-          { lv: "1–2", verb: "Outlines", d: "how science is used, and states an implication" },
-          { lv: "3–4", verb: "Summarizes", d: "how science is used, with one or two implications, and some evidence" },
-          { lv: "5–6", verb: "Describes", d: "how science solves the problem and describes implications on both sides, with sources" },
+          { lv: "1–2", verb: "Outlines", d: "how stem cells are used, and states an implication" },
+          { lv: "3–4", verb: "Summarizes", d: "how stem cells are used, with one or two implications, and some evidence" },
+          { lv: "5–6", verb: "Describes", d: "how stem cell transplants solve the problem and describes implications on both sides, with sources" },
           { lv: "7–8", verb: "Explains", d: "how the science works, discusses and evaluates several implications with evidence, and reaches a justified conclusion" }
         ],
-        checklist: ["Key science words: osmosis, partially permeable membrane, concentration, pressure", "Both sides for every implication", "A number with a unit and a source name in every paragraph", "A conclusion with a judgement, a reason and a recommendation"]
+        checklist: ["Key science words: stem cell, unspecialised, differentiate, specialised cell, transplant", "Both sides for every implication", "A number and a source name in every paragraph", "A conclusion with a judgement, a reason and a recommendation"]
       } },
 
       { id: "w3d1", type: "mcq", marks: 1,
-        prompt: "In reverse osmosis (Source A), which way do <b>water</b> molecules move through the membrane?",
-        options: ["From the fresh water side into the seawater, by normal osmosis", "From the seawater into the fresh water side, because high pressure pushes them", "Salt moves from the seawater into the fresh water side", "Water does not move; only salt moves"], answer: 1,
-        explain: "High pressure forces water out of the concentrated seawater into the dilute side. This is the opposite direction to normal osmosis, which is why it is called reverse osmosis. Salt is too big to pass through the membrane." },
+        prompt: "Which property makes stem cells useful for treating blood diseases (Source A)?",
+        options: ["They are already specialised red blood cells.", "They are unspecialised and can divide and differentiate into different types of blood cell.", "They can carry more oxygen than red blood cells.", "They kill the bacteria that cause the disease."], answer: 1,
+        explain: "Stem cells are unspecialised. They can divide to make more cells and differentiate into specialised cells such as red blood cells, white blood cells and platelets." },
 
       { id: "w3d2", type: "text", marks: 3, minWords: 45,
-        prompt: "<b>Describe</b> the ways in which science has been applied in the UAE to produce drinking water from seawater. Use Source A.",
-        hint: "The problem is that the UAE … . Scientists use reverse osmosis: pumps push seawater against a … membrane at high … . This forces … molecules to move from the … seawater to the … side, while salt … . This solves the problem because … .",
-        model: "The UAE has very little rain and few rivers, so it does not have enough fresh water for its population (1). In reverse osmosis plants, pumps push seawater against a partially permeable membrane at very high pressure, which forces water molecules out of the concentrated seawater into the fresh water side, the opposite direction to normal osmosis (1). Salt particles are too big to pass through the membrane, so they stay behind in the brine, and the water that comes through is fresh enough to drink. This means the country can make drinking water from the sea, e.g. Taweelah makes 909,200 m³ per day (1).",
-        points: ["The problem: little rain/fresh water in the UAE", "How it works: high pressure pushes water through a partially permeable membrane, opposite to osmosis", "Salt stays behind as brine → fresh drinking water (with evidence)"] },
+        prompt: "<b>Describe</b> the ways in which science has been applied to treat thalassaemia using cord blood stem cells. Use Sources A and B.",
+        hint: "The problem is that people with thalassaemia … (Source B). Doctors use a stem cell transplant: healthy stem cells from … are put into … . Stem cells are … , so they can … and … into … . This solves the problem because … .",
+        model: "Thalassaemia is an inherited disorder in which the body cannot make enough healthy haemoglobin, so patients need blood transfusions every few weeks (Source B) (1). In a stem cell transplant, healthy stem cells from a matching donor's cord blood are put into the patient's blood and settle in the bone marrow (1). Because stem cells are unspecialised, they can divide and differentiate into healthy red blood cells that make normal haemoglobin, so the patient no longer needs transfusions. Source B says a transplant is the only treatment that can cure thalassaemia (1).",
+        points: ["The problem: thalassaemia, not enough healthy haemoglobin / transfusions (Source B)", "Transplant of healthy matching donor stem cells into the patient", "Stem cells divide and differentiate into healthy red blood cells → cure"] },
 
-      { id: "w3d3", type: "text", marks: 3, minWords: 40,
-        prompt: "Brine is piped back into the sea near the coast (Source D). <b>Explain</b>, using osmosis, why brine can harm animals living on the seabed near a desalination plant.",
-        hint: "Brine is … compared with the cells of sea animals, so the water concentration is … outside their cells. Water moves … of their cells by … through the partially permeable membrane, so … . Source D also says brine can … .",
-        model: "Brine is much saltier than normal seawater, so it is hypertonic compared with the cells of animals living on the seabed (1). The water concentration is lower outside their cells, so water moves out of their cells by osmosis through the partially permeable membrane, and the cells shrink and cannot work properly (1). Source D also says brine can lower the oxygen in the water and contain chemicals such as chlorine and copper, which can harm or kill seabed animals (1).",
-        points: ["Brine is hypertonic / lower water concentration than the animals' cells", "Water leaves the cells by osmosis → cells shrink / damaged", "Extra harm from Source D: less oxygen or chemicals"] },
+      { id: "w3d3", type: "text", marks: 2, minWords: 30,
+        prompt: "Use Source D. <b>Explain</b> why a child born with thalassaemia usually cannot be cured with their <b>own</b> stored cord blood, but can be helped by cord blood from a healthy donor.",
+        hint: "Thalassaemia is … , so the child's own stem cells carry … . If these cells differentiated into red blood cells, they would … . A healthy donor's stem cells … .",
+        model: "Thalassaemia is inherited, so every cell in the child's body, including the stem cells in their own cord blood, carries the same faulty gene. If those stem cells were transplanted back, the red blood cells they make would still not produce enough healthy haemoglobin (1). Stem cells from a healthy, matching donor do not carry the fault, so the red blood cells they differentiate into make normal haemoglobin (1).",
+        points: ["Own stem cells carry the same faulty gene → still make faulty red blood cells", "Healthy donor's stem cells → normal red blood cells / haemoglobin"] },
 
-      { id: "w3d4", type: "num", marks: 1, min: 4.4, max: 4.6, unit: "times",
-        prompt: "Use the <b>lowest</b> value for each method in Source C. <b>Calculate</b> how many times more energy multi-stage flash uses than reverse osmosis (1 d.p.).",
-        explain: "13.5 ÷ 3.0 = 4.5 times. So even at its best, the thermal method needs about four and a half times as much energy." },
+      { id: "w3d4", type: "num", marks: 1, min: 0.25, max: 0.25, unit: "%",
+        prompt: "Source D says the chance that a child will ever need their own cord blood is at best <b>1 in 400</b>. <b>Calculate</b> this as a percentage.",
+        explain: "1 ÷ 400 × 100 = 0.25%. Even the most hopeful estimate means that 399 out of every 400 privately stored units will never be used by that child." },
 
       { id: "w3d5", type: "text", marks: 3, minWords: 45,
-        prompt: "<b>Describe</b> one <b>environmental</b> advantage and one <b>environmental</b> disadvantage of making more of the UAE's water by reverse osmosis.",
-        hint: "Advantage: Reverse osmosis uses … energy than thermal methods (Source C shows …). This means that … . Disadvantage: Reverse osmosis still produces … (Source D shows …). This means that … .",
-        model: "An environmental advantage is that reverse osmosis uses much less energy than thermal desalination: 3.0–5.5 kWh per m³ compared with 13.5–25.6 kWh per m³ for multi-stage flash (Source C). Because most of this energy comes from burning natural gas, less carbon dioxide is released, and Source B says the 2030 plan will cut emissions from making water by 88% (1.5). An environmental disadvantage is that reverse osmosis still makes brine, about 1.5 litres for every litre of fresh water worldwide (Source D). When it is piped back into the sea, it raises the salt level, lowers oxygen and can carry chemicals, which harms animals living on the seabed (1.5).",
-        points: ["Advantage with evidence: less energy (Source C) → less CO₂ (Source B, 88%)", "Disadvantage with evidence: brine (Source D, 1.5 L per L)", "Consequence for the environment of each (climate change / harm to marine life)"] },
+        prompt: "<b>Describe</b> one <b>economic</b> advantage and one <b>economic</b> disadvantage of a family paying to store their baby's cord blood in a private bank.",
+        hint: "Advantage: If a family member ever needs a transplant, … (Source B: transfusions every few weeks for life). This means that … . Disadvantage: Private banking costs … (Source C), but Source D shows … . This means that … .",
+        model: "An economic advantage is that if a brother or sister develops a disease that cord blood can treat, the family already has stem cells ready, which could avoid years of expensive treatment such as blood transfusions every few weeks for life (Source B). A transplant could save the family a lot of money in the long term (1.5). An economic disadvantage is that private banking costs AED 9,000 to AED 38,000 (Source C), and Source D shows there is only a 1 in 400 to 1 in 200,000 chance that the child will ever use it. So most families pay a lot of money for something they will never need (1.5).",
+        points: ["Advantage with evidence: avoids costly long-term treatment if needed (Source B)", "Disadvantage with evidence: AED 9,000–38,000 (Source C) for a very small chance of use (Source D)", "Consequence of each for the family"] },
 
-      { id: "w3d6", type: "text", marks: 3, minWords: 45,
-        prompt: "<b>Describe</b> one <b>economic</b> advantage and one <b>economic</b> disadvantage of building reverse osmosis plants like Taweelah.",
-        hint: "Advantage: … uses less energy, so … (Source C). This means that … . Disadvantage: building the plant costs … (Source B), and … . This means that … .",
-        model: "An economic advantage is that reverse osmosis needs much less energy per m³ of water (Source C), and energy is the biggest running cost, so each litre of water is cheaper to produce. This saves money for the government and water companies, and the savings can be passed to families (1.5). An economic disadvantage is that the plants are very expensive to build: Taweelah cost Dh3.2 billion (Source B). The membranes also need cleaning and replacing, so the money must be found before any water is produced (1.5).",
-        points: ["Advantage with evidence: lower energy cost per m³ (Source C)", "Disadvantage with evidence: high building cost, Dh3.2 billion (Source B) / membrane upkeep", "Consequence of each (who pays / who saves)"] },
+      { id: "w3d6", type: "text", marks: 3, minWords: 40,
+        prompt: "<b>Describe</b> one <b>social</b> advantage and one <b>social</b> disadvantage of the UAE encouraging more parents to <b>donate</b> cord blood to public banks.",
+        hint: "Advantage: The UAE has many different … (Source C), and transplants work best when … . This means that … . Disadvantage: If parents donate, … (Source C: who can use it). This means that … .",
+        model: "A social advantage is that more donations would build a larger public registry with the many different ethnic groups that live in the UAE (Source C). Transplants work best when donor and patient are a close match, so more patients from every community, for example children with thalassaemia, could find a donor and be cured (1.5). A social disadvantage is that donated cord blood can be used by any patient, not by the family (Source C). If a brother or sister later needs a transplant, the family cannot reserve their own baby's cord blood, which could cause worry and regret (1.5).",
+        points: ["Advantage with evidence: diverse registry / more matches for UAE patients (Source C)", "Disadvantage with evidence: family cannot reserve donated unit (Source C)", "Consequence of each for people / communities"] },
 
       { id: "w3d7", type: "text", marks: 3, minWords: 40,
-        prompt: "<b>Describe</b> one <b>social</b> implication and one <b>ethical</b> implication of the UAE depending on desalination for its drinking water.",
-        hint: "Social: Desalination supplies … (Source B shows …). This means that people … . Ethical: Is it fair that … ? For example, the brine harms … / countries that cannot afford … .",
-        model: "Social: desalination gives a reliable supply of safe drinking water in a desert country. Source B shows the Taweelah plant alone can supply over 350,000 households, which means people can live, work and stay healthy in UAE cities even though there is very little rain (1.5). Ethical: it raises the question of whether it is fair to damage marine life with brine to provide water for people (Source D says the UAE makes about 20% of the world's brine). It is also unfair that poorer countries that are short of water cannot afford plants that cost billions of dirhams (1.5).",
-        points: ["Social implication with evidence (reliable safe water / 350,000 households)", "Ethical implication: fairness to marine life or to poorer countries, with evidence"] },
+        prompt: "<b>Describe</b> one <b>ethical</b> concern about <b>private</b> cord blood banking. (Ethical means whether something is fair and right.)",
+        hint: "Is it fair that … (Source C: cost)? OR Is it right that companies sell … when Source D shows … ? This means that … .",
+        model: "One ethical concern is fairness: private banking costs up to AED 38,000 (Source C), so only richer families can afford to keep stem cells for their children, while poorer families cannot (1). Another concern is honesty: private banks may sell storage to worried parents as “insurance”, even though Source D shows the chance of a child using their own cord blood is at best 1 in 400 and it usually cannot treat inherited diseases (1). Meanwhile, stem cells that could have saved another patient's life sit unused in a private bank (1).",
+        points: ["Fairness: only wealthy families can afford it (Source C)", "Honesty / pressure on worried parents vs the real chance of use (Source D)", "Wasted cells that could save others"] },
 
       { id: "w3d8", type: "mcq", marks: 1,
         prompt: "Which of these is a correctly <b>documented</b> source (strand iv)?",
-        options: ["The internet (2019)", "Jones, E. and others (2019). The state of desalination and brine production: a global outlook. Science of the Total Environment.", "A study about brine", "Science of the Total Environment"], answer: 1,
-        explain: "A reference needs the author, the year, the title and where it was published." },
+        options: ["A website about cord blood", "Dubai Health Authority (2021). Dubai Cord Blood and Research Centre service catalogue. dha.gov.ae", "Dubai (2021)", "Google search: cord blood UAE"], answer: 1,
+        explain: "A reference needs the author (or organisation), the year, the title and where it was published." },
 
       { id: "w3d9", type: "text", marks: 8, minWords: 180,
-        prompt: "The UAE plans to make 90% of its desalinated water by reverse osmosis by 2030 (Source B). Using information from this task and your wider MYP studies, <b>discuss and evaluate</b> this plan. In your answer, include:<ul><li>how reverse osmosis uses the science of osmosis to make drinking water</li><li>the environmental implications</li><li>the economic implications</li><li>a social or ethical implication</li><li>a concluding statement that justifies your opinion, with one recommendation</li></ul>",
-        hint: "Use the 5-step plan. <b>1</b> Introduce: the UAE needs water because… Reverse osmosis works by… <b>2</b> Advantages, with evidence: Source C shows… This means that… <b>3</b> Disadvantages, with evidence: However, Source D shows… <b>4</b> Weigh them up: The most important point is… because… <b>5</b> Conclude: Overall, I think the plan is…, because… However…, so I recommend…",
-        model: "The UAE has very little rain, so it depends on desalination: 30% of Abu Dhabi's total water comes from it (Source B). Reverse osmosis uses high pressure to push water from seawater through a partially permeable membrane, the opposite of normal osmosis, while salt stays behind as brine (Source A) (1).\n\nEnvironmental: the main advantage is energy. Reverse osmosis uses 3.0–5.5 kWh per m³, compared with 13.5–25.6 kWh per m³ for multi-stage flash (Source C), and most UAE energy comes from natural gas, so the plan will cut emissions from making water by 88% (Source B). This helps the UAE reduce climate change (1). However, reverse osmosis still makes brine. Worldwide, plants make about 1.5 litres of brine for every litre of fresh water, and the UAE makes about 20% of the world's brine (Source D). Brine is hypertonic to the cells of seabed animals, so they lose water by osmosis, and it can also lower oxygen and carry chemicals (1).\n\nEconomic: lower energy use means each m³ of water is cheaper to make, which saves money for the country (1). On the other hand, the plants are very expensive to build, as Taweelah cost Dh3.2 billion (Source B), and membranes must be cleaned and replaced (1).\n\nSocial and ethical: the plan gives a reliable, safe supply of drinking water. Taweelah alone can supply over 350,000 households (Source B), so people can live healthily in a desert country (1). Ethically, it is not fair if marine life is harmed by brine so that people can have water, especially as the UAE produces so much of the world's brine (1).\n\nWeighing these up, the energy and carbon savings are very large and affect the whole country and the climate, while the brine problem is local and can be reduced. Overall, I think the plan is a good one, because reverse osmosis gives the same safe water using about four times less energy than the thermal method (1). However, the brine must be managed, so I recommend that the UAE spreads the brine out far from the coast and invests in recovering salts from it or using it in fish farms, as Source D suggests (1).",
-        points: ["How RO uses osmosis/pressure/membrane to make drinking water", "Environmental advantage with evidence (energy / 88% emissions)", "Environmental disadvantage with evidence (brine, osmosis harm to sea life)", "Economic advantage with evidence", "Economic disadvantage with evidence (Dh3.2 billion)", "Social or ethical implication with evidence", "Points weighed up: balanced evaluation", "Justified conclusion with a recommendation"] }
+        prompt: "Some people think the UAE should encourage all parents to <b>donate</b> their baby's cord blood to a public bank, instead of paying to store it privately. Using information from this task and your wider MYP studies, <b>discuss and evaluate</b> this idea. In your answer, include:<ul><li>how cord blood stem cells can be used to treat blood diseases such as thalassaemia</li><li>the economic implications</li><li>the social implications</li><li>an ethical implication</li><li>a concluding statement that justifies your opinion, with one recommendation</li></ul>",
+        hint: "Use the 5-step plan. <b>1</b> Introduce: cord blood contains stem cells that… Thalassaemia is… <b>2</b> Advantages of donating, with evidence: Source C shows… This means that… <b>3</b> Disadvantages, with evidence: However, … <b>4</b> Weigh them up: The most important point is… because… <b>5</b> Conclude: Overall, I think…, because… However…, so I recommend…",
+        model: "Cord blood contains stem cells, which are unspecialised and can divide and differentiate into red blood cells, white blood cells and platelets (Source A). In a transplant, healthy donor stem cells replace a patient's faulty blood-making cells. This matters in the UAE, where at least 8.5% of people carry the thalassaemia gene and a transplant is the only cure (Source B) (1).\n\nEconomic: donating is free, while private storage costs AED 9,000 to AED 38,000 (Source C), and the chance a child will ever use their own cord blood is only 1 in 400 to 1 in 200,000 (Source D). So most families who bank privately spend a lot on something they will never use (1). However, a family with an older child who already has a treatable disease could save the cost of years of transfusions by keeping a sibling's cord blood (1).\n\nSocial: more donations would build a public registry that includes the many ethnic groups in the UAE (Source C), and transplants work best with a close match, so more patients in every community could find a donor (1). On the other hand, once it is donated, the family cannot reserve the cord blood for their own children, which may worry parents (1).\n\nEthical: public banking is fairer, because any patient can benefit, not only families who can pay. A child's own cord blood usually cannot treat an inherited disease anyway, because it carries the same faulty gene (Source D) (1).\n\nWeighing these up, the benefits of donation reach many patients, while the benefit of private banking reaches very few. Overall, I think the UAE should encourage parents to donate, because it is free and gives far more patients, especially those with thalassaemia, a real chance of a cure (1). However, families with a sick child need their own option, so I recommend free family storage for those families, as the American Academy of Pediatrics advises, and public donation for everyone else (1).",
+        points: ["How stem cells (unspecialised, differentiate) treat thalassaemia, with Source A/B evidence", "Economic: free donation vs AED 9,000–38,000 for a 1 in 400–200,000 chance (Sources C, D)", "Economic counter-point: families with an affected child", "Social advantage: diverse UAE registry / more matches (Source C)", "Social disadvantage: family cannot reserve the unit", "Ethical implication: fairness / own cells carry the same faulty gene (Source D)", "Points weighed up: balanced evaluation", "Justified conclusion with a recommendation"] }
     ]
   }
   ]
