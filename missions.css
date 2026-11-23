@@ -239,3 +239,25 @@
 .mtrail.many .mstop:not([aria-current="step"]) .t{display:none}
 .mtrail.many .mstop:not([aria-current="step"]){padding:3px}
 @media (max-width:640px){.mtrail.many{flex-basis:100%}}
+
+/* ---------- Cell cycle and mitosis sims ---------- */
+.cyclewrap{display:flex;justify-content:center;margin:6px 0}
+.cyclewrap svg path{transition:opacity .2s}
+.simh{margin:16px 0 6px;font-size:16px}
+.guard{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.gcard{border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card)}
+.gcard p{margin:6px 0 8px;font-size:14px}
+.gcard.right{border-color:var(--green);background:var(--green-soft)}
+.gcard.wrong{border-color:var(--red);background:var(--red-soft)}
+.gtag{font:700 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.mseq{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0}
+.mslot{border:2px dashed var(--line);border-radius:12px;min-height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px;text-align:center}
+.mslot.on{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+.mslot small{font-size:12px;font-weight:700}
+.mpool{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.mcard{border:2px solid var(--line);border-radius:12px;background:var(--card);padding:4px;cursor:pointer}
+.mcard:hover,.mcard:focus-visible{border-color:var(--blue)}
+.mquiz{display:flex;flex-direction:column;align-items:center;gap:8px}
+.stagerow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:8px 0}
+.stagerow figure{margin:0;text-align:center}
+@media (max-width:560px){.mseq{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.mslot{min-height:70px}}

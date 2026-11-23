@@ -14,6 +14,88 @@
      info     stimulus text / tables (no marks)
    ========================================================= */
 
+/* ---------- Drawings of the cell cycle and mitosis (shared by weeks.js prompts and sims.js) ----------
+   cellSVG(stage, opts) returns an SVG string. stage: interphase | prophase | metaphase | anaphase | telophase | cytokinesis
+   opts.size (px width), opts.label (letter shown in the corner), opts.name (accessible name) */
+window.cellSVG = function (stage, opts) {
+  opts = opts || {};
+  var C = ["#c0392b", "#2f7fb8", "#7d4fb0", "#d68910"];
+  var mem = "fill='#f4efe4' fill-opacity='.9' stroke='#6b5b45' stroke-width='2.2'";
+  var spin = "stroke='#9aa5ad' stroke-width='1' fill='none'";
+  var o = [];
+  function X(x, y, c, r) { // a copied chromosome: two sister chromatids joined at the centromere
+    r = r || 0;
+    o.push("<g transform='translate(" + x + " " + y + ") rotate(" + r + ")' stroke='" + c + "' stroke-width='3.6' stroke-linecap='round' fill='none'><path d='M-5 -9 Q0 0 -5 9'/><path d='M5 -9 Q0 0 5 9'/></g><circle cx='" + x + "' cy='" + y + "' r='1.8' fill='#333'/>");
+  }
+  function V(x, y, c, dir) { // a single chromatid being pulled; dir -1 = to the left pole, 1 = to the right pole
+    o.push("<path d='M" + (x + 8 * -dir) + " " + (y - 7) + " L" + x + " " + y + " L" + (x + 8 * -dir) + " " + (y + 7) + "' stroke='" + c + "' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/>");
+  }
+  function cent(x, y) { o.push("<g fill='#555'><rect x='" + (x - 3) + "' y='" + (y - 5) + "' width='2.4' height='7' rx='1'/><rect x='" + (x + 0.6) + "' y='" + (y - 5) + "' width='2.4' height='7' rx='1'/></g>"); }
+  function chromatin(cx, cy, rr) {
+    o.push("<g stroke-width='1.3' fill='none' stroke-linecap='round'>");
+    for (var i = 0; i < 4; i++) {
+      var a = i * 1.6, x1 = cx + Math.cos(a) * rr * .5, y1 = cy + Math.sin(a) * rr * .5;
+      o.push("<path stroke='" + C[i] + "' d='M" + (x1 - 7).toFixed(1) + " " + y1.toFixed(1) + " q3 -5 6 0 t6 0 t6 0'/>");
+    }
+    o.push("</g>");
+  }
+  if (stage === "interphase") {
+    o.push("<ellipse cx='60' cy='60' rx='50' ry='44' " + mem + "/>");
+    o.push("<circle cx='60' cy='60' r='22' fill='#e9e1f2' stroke='#7d4fb0' stroke-width='1.8'/><circle cx='66' cy='52' r='4.5' fill='#b9a6d4'/>");
+    chromatin(58, 62, 24); cent(34, 30);
+  } else if (stage === "prophase") {
+    o.push("<ellipse cx='60' cy='60' rx='50' ry='44' " + mem + "/>");
+    o.push("<circle cx='60' cy='60' r='25' fill='none' stroke='#7d4fb0' stroke-width='1.8' stroke-dasharray='5 5'/>");
+    o.push("<path " + spin + " d='M18 60 Q40 40 60 38 M18 60 Q40 80 60 82 M102 60 Q80 40 60 38 M102 60 Q80 80 60 82'/>");
+    X(50, 50, C[0], 25); X(70, 52, C[1], -30); X(52, 72, C[2], -15); X(71, 70, C[3], 40);
+    cent(16, 60); cent(104, 60);
+  } else if (stage === "metaphase") {
+    o.push("<ellipse cx='60' cy='60' rx='50' ry='44' " + mem + "/>");
+    o.push("<line x1='60' y1='20' x2='60' y2='100' stroke='#c9b99a' stroke-width='1' stroke-dasharray='3 3'/>");
+    var ys = [32, 50, 70, 88];
+    ys.forEach(function (y) { o.push("<path " + spin + " d='M16 60 L56 " + y + " M104 60 L64 " + y + "'/>"); });
+    ys.forEach(function (y, i) { X(60, y, C[i], 90); });
+    cent(13, 60); cent(107, 60);
+  } else if (stage === "anaphase") {
+    o.push("<ellipse cx='60' cy='60' rx='54' ry='40' " + mem + "/>");
+    var ya = [30, 50, 70, 90];
+    ya.forEach(function (y, i) { var yy = 60 + (y - 60) * .7; o.push("<path " + spin + " d='M12 60 L26 " + yy + " M108 60 L94 " + yy + "'/>"); V(26, yy, C[i], -1); V(94, yy, C[i], 1); });
+    cent(9, 60); cent(111, 60);
+  } else if (stage === "telophase") {
+    o.push("<path d='M60 26 C30 10 6 30 6 60 C6 90 30 110 60 94 C90 110 114 90 114 60 C114 30 90 10 60 26 Z' " + mem + "/>");
+    [32, 88].forEach(function (cx) { o.push("<circle cx='" + cx + "' cy='60' r='17' fill='#e9e1f2' stroke='#7d4fb0' stroke-width='1.8'/>"); chromatin(cx, 60, 16); });
+  } else if (stage === "cytokinesis") {
+    [31, 89].forEach(function (cx) {
+      o.push("<ellipse cx='" + cx + "' cy='60' rx='27' ry='30' " + mem + "/><circle cx='" + cx + "' cy='60' r='12' fill='#e9e1f2' stroke='#7d4fb0' stroke-width='1.6'/>");
+      chromatin(cx, 60, 11);
+    });
+  }
+  if (opts.label) o.push("<circle cx='12' cy='12' r='10' fill='#1f2a33'/><text x='12' y='16.5' text-anchor='middle' font-size='13' font-weight='700' fill='#fff' font-family='sans-serif'>" + opts.label + "</text>");
+  var w = opts.size || 140;
+  return "<svg viewBox='0 0 120 120' width='" + w + "' height='" + w + "' role='img' aria-label='" + (opts.name || (opts.label ? "Cell " + opts.label : "Cell")) + "' style='max-width:100%;height:auto'>" + o.join("") + "</svg>";
+};
+/* the cell cycle as a wheel: segments A–D and checkpoints X, Y */
+window.cycleSVG = function (opts) {
+  opts = opts || {};
+  var cx = 110, cy = 110, R = 92, r = 48;
+  function pt(a, rad) { var t = (a - 90) * Math.PI / 180; return [cx + rad * Math.cos(t), cy + rad * Math.sin(t)]; }
+  function arc(a0, a1, fill) {
+    var p0 = pt(a0, R), p1 = pt(a1, R), q1 = pt(a1, r), q0 = pt(a0, r), big = a1 - a0 > 180 ? 1 : 0;
+    return "<path d='M" + p0 + " A" + R + " " + R + " 0 " + big + " 1 " + p1 + " L" + q1 + " A" + r + " " + r + " 0 " + big + " 0 " + q0 + " Z' fill='" + fill + "' stroke='#fff' stroke-width='2'/>";
+  }
+  var segs = opts.segs || [["A", 0, 160, "#8fc1e3"], ["B", 160, 280, "#a8d5a2"], ["C", 280, 330, "#f2c98a"], ["D", 330, 360, "#e59a9a"]];
+  var o = [];
+  segs.forEach(function (sg) { o.push(arc(sg[1], sg[2], sg[3])); var m = pt((sg[1] + sg[2]) / 2, (R + r) / 2); o.push("<text x='" + m[0].toFixed(1) + "' y='" + (m[1] + 6).toFixed(1) + "' text-anchor='middle' font-size='" + (sg[4] || 18) + "' font-weight='700' fill='#1f2a33' font-family='sans-serif'>" + sg[0] + "</text>"); });
+  (opts.checks || [["X", 160], ["Y", 330]]).forEach(function (c) {
+    var a = pt(c[1], R + 4), b = pt(c[1], r - 4), l = pt(c[1], R + 18);
+    o.push("<line x1='" + a[0] + "' y1='" + a[1] + "' x2='" + b[0] + "' y2='" + b[1] + "' stroke='#1f2a33' stroke-width='4'/><circle cx='" + l[0].toFixed(1) + "' cy='" + l[1].toFixed(1) + "' r='11' fill='#1f2a33'/><text x='" + l[0].toFixed(1) + "' y='" + (l[1] + 5).toFixed(1) + "' text-anchor='middle' font-size='13' font-weight='700' fill='#fff' font-family='sans-serif'>" + c[0] + "</text>");
+  });
+  o.push("<path d='M" + pt(20, R + 10) + " A" + (R + 10) + " " + (R + 10) + " 0 0 1 " + pt(60, R + 10) + "' fill='none' stroke='#6b7780' stroke-width='2'/>");
+  var ah = pt(60, R + 10); o.push("<circle cx='" + ah[0] + "' cy='" + ah[1] + "' r='3.5' fill='#6b7780'/>");
+  if (opts.center !== false) o.push("<text x='" + cx + "' y='" + (cy + 5) + "' text-anchor='middle' font-size='13' fill='currentColor' font-family='sans-serif'>" + (opts.center || "cell cycle") + "</text>");
+  return "<svg viewBox='-10 -10 240 240' width='" + (opts.size || 240) + "' height='" + (opts.size || 240) + "' role='img' aria-label='" + (opts.name || "Diagram of the cell cycle with four phases labelled A to D and two checkpoints labelled X and Y") + "' style='max-width:100%;height:auto'>" + o.join("") + "</svg>";
+};
+
 window.REVISION_WEEKS = [
 {
   id: "w1",
@@ -798,6 +880,242 @@ window.REVISION_WEEKS = [
         hint: "Use the 5-step plan. <b>1</b> Introduce: cord blood contains stem cells that… Thalassaemia is… <b>2</b> Advantages of donating, with evidence: Source C shows… This means that… <b>3</b> Disadvantages, with evidence: However, … <b>4</b> Weigh them up: The most important point is… because… <b>5</b> Conclude: Overall, I think…, because… However…, so I recommend…",
         model: "Cord blood contains stem cells, which are unspecialised and can divide and differentiate into red blood cells, white blood cells and platelets (Source A). In a transplant, healthy donor stem cells replace a patient's faulty blood-making cells. This matters in the UAE, where at least 8.5% of people carry the thalassaemia gene and a transplant is the only cure (Source B) (1).\n\nEconomic: donating is free, while private storage costs AED 9,000 to AED 38,000 (Source C), and the chance a child will ever use their own cord blood is only 1 in 400 to 1 in 200,000 (Source D). So most families who bank privately spend a lot on something they will never use (1). However, a family with an older child who already has a treatable disease could save the cost of years of transfusions by keeping a sibling's cord blood (1).\n\nSocial: more donations would build a public registry that includes the many ethnic groups in the UAE (Source C), and transplants work best with a close match, so more patients in every community could find a donor (1). On the other hand, once it is donated, the family cannot reserve the cord blood for their own children, which may worry parents (1).\n\nEthical: public banking is fairer, because any patient can benefit, not only families who can pay. A child's own cord blood usually cannot treat an inherited disease anyway, because it carries the same faulty gene (Source D) (1).\n\nWeighing these up, the benefits of donation reach many patients, while the benefit of private banking reaches very few. Overall, I think the UAE should encourage parents to donate, because it is free and gives far more patients, especially those with thalassaemia, a real chance of a cure (1). However, families with a sick child need their own option, so I recommend free family storage for those families, as the American Academy of Pediatrics advises, and public donation for everyone else (1).",
         points: ["How stem cells (unspecialised, differentiate) treat thalassaemia, with Source A/B evidence", "Economic: free donation vs AED 9,000–38,000 for a 1 in 400–200,000 chance (Sources C, D)", "Economic counter-point: families with an affected child", "Social advantage: diverse UAE registry / more matches (Source C)", "Social disadvantage: family cannot reserve the unit", "Ethical implication: fairness / own cells carry the same faulty gene (Source D)", "Points weighed up: balanced evaluation", "Justified conclusion with a recommendation"] }
+    ]
+  }
+  ]
+},
+{
+  id: "w4",
+  title: "The cell cycle and mitosis",
+  topic: "Unit 2: Cell division and reproduction",
+  lessons: "Unit 2 – Lesson 1",
+  opens: "2026-11-23T07:00:00+04:00",
+  due: "2026-11-29T23:59:00+04:00",
+  minutes: 45,
+  sections: [
+  {
+    crit: "R", name: "Recall missions",
+    tests: "Memorise every key fact about why cells divide, how DNA is packed, the cell cycle and the stages of mitosis.",
+    items: [
+      /* ---------- Mission 1: why cells divide ---------- */
+      { type: "info", mission: { n: 1, title: "Why cells divide", lesson: "Lesson 1 · Why cells stay small",
+        story: "You lose about 30 000 skin cells every minute, yet your skin never wears away. Where do the new cells come from, and why don't cells just grow bigger?" } },
+      { type: "info", predict: { q: "A cube-shaped cell doubles its side length from 1 cm to 2 cm. What happens to its surface area to volume ratio?",
+        options: ["It doubles", "It stays the same", "It halves", "It increases 8 times"], answer: 2,
+        reveal: "SA goes from 6 to 24 cm² (×4), but volume goes from 1 to 8 cm³ (×8). The SA : V ratio falls from 6 : 1 to 3 : 1: it <b>halves</b>. Volume grows faster than surface area, so a big cell cannot get enough food and oxygen through its membrane." } },
+      { type: "info", sim: { name: "saVLab", title: "Agar cubes: surface area and volume" } },
+      { type: "info", flash: [
+        { q: "Give the 4 reasons why cells divide.", a: "1. Growth. 2. Repair (e.g. a cut or a broken bone). 3. Replacing old or worn-out cells. 4. Asexual reproduction." },
+        { q: "What happens to the SA : V ratio as a cell gets bigger?", a: "It gets smaller, because volume increases faster than surface area." },
+        { q: "Why is a large cell a problem?", a: "It has too little membrane for its volume, so substances cannot diffuse in and out fast enough, and the centre is too far from the surface." },
+        { q: "How does dividing help?", a: "Two smaller cells each have a larger SA : V ratio, so exchange through the membrane is fast enough again." },
+        { q: "Formulas for a cube of side L?", a: "Surface area = 6 × L². Volume = L³. SA : V ratio = SA ÷ V." }
+      ] },
+      { id: "w4r1", type: "numtable", marks: 3,
+        prompt: "<b>Calculate</b> the values for a cube-shaped cell with sides of <b>4 cm</b>.",
+        howto: "Type numbers only. For the ratio, type the first number of “? : 1”, e.g. 1.5.",
+        head: ["Quantity", "Value"],
+        rows: [
+          { label: "Surface area (cm²)", answer: 96, tol: 0.01, hint: "6 × 4 × 4" },
+          { label: "Volume (cm³)", answer: 64, tol: 0.01, hint: "4 × 4 × 4" },
+          { label: "SA : V ratio (? : 1)", answer: 1.5, tol: 0.01, hint: "96 ÷ 64" }
+        ] },
+      { id: "w4r2", type: "match", marks: 4,
+        prompt: "<b>Identify</b> the reason for cell division in each example.",
+        head: ["Example", "Reason"],
+        options: ["growth", "repair", "replacing old cells", "asexual reproduction"],
+        rows: [
+          { label: "A baby gets taller", answer: "growth" },
+          { label: "A cut on your hand closes", answer: "repair" },
+          { label: "The lining of your small intestine is renewed every 3–5 days", answer: "replacing old cells" },
+          { label: "A yeast cell splits to make a new yeast cell", answer: "asexual reproduction" }
+        ] },
+      { type: "info", exam: "<b>In criterion A this becomes:</b> “<b>Explain</b> why cells divide rather than continuing to grow [3]”. Mention SA : V ratio, diffusion and distance to the centre." },
+
+      /* ---------- Mission 2: packing the DNA ---------- */
+      { type: "info", mission: { n: 2, title: "Packing the DNA", lesson: "Lesson 1 · Chromatin and chromosomes",
+        story: "If you uncoiled the DNA in one of your cells it would be about 2 metres long, yet it fits in a nucleus about 6 µm wide. How?" } },
+      { type: "info", predict: { q: "A human body cell has just finished copying its DNA. How many <b>chromosomes</b> does it have?",
+        options: ["23", "46", "92", "184"], answer: 1,
+        reveal: "Still <b>46</b> chromosomes. Each one is now made of two identical <b>sister chromatids</b>, so there are 92 chromatids, but they are still counted as 46 chromosomes because each pair is joined at a centromere." } },
+      { type: "info", flash: [
+        { q: "Where is the DNA in a prokaryotic cell?", a: "Free in the cytoplasm, mainly as a ring (loop) of DNA. There is no nucleus." },
+        { q: "Where is the DNA in a eukaryotic cell?", a: "In the nucleus, wrapped around proteins and coiled up." },
+        { q: "Chromatin vs chromosome?", a: "Chromatin: relaxed, uncoiled DNA during interphase, so genes can be read. Chromosome: tightly coiled DNA, visible when the cell divides." },
+        { q: "What are sister chromatids?", a: "The two identical copies of a chromosome made when the DNA is copied, joined together." },
+        { q: "What is the centromere?", a: "The point where the two sister chromatids are joined. Spindle fibres attach here during mitosis." },
+        { q: "How many chromosomes in a human body cell?", a: "46." }
+      ] },
+      { id: "w4r3", type: "match", marks: 5,
+        prompt: "<b>Define</b> each term: choose the correct description.",
+        head: ["Term", "Description"],
+        options: ["relaxed, uncoiled DNA seen during interphase", "tightly coiled DNA, visible when a cell divides", "one of two identical copies of a chromosome", "the point where sister chromatids are joined", "the number of chromosomes in a human body cell"],
+        rows: [
+          { label: "Chromatin", answer: "relaxed, uncoiled DNA seen during interphase" },
+          { label: "Chromosome", answer: "tightly coiled DNA, visible when a cell divides" },
+          { label: "Sister chromatid", answer: "one of two identical copies of a chromosome" },
+          { label: "Centromere", answer: "the point where sister chromatids are joined" },
+          { label: "46", answer: "the number of chromosomes in a human body cell" }
+        ] },
+      { id: "w4r4", type: "mcq", marks: 1,
+        prompt: "Why is DNA in the form of loose <b>chromatin</b> during most of the cell's life?",
+        options: ["So it takes up less space", "So the genes can be read and used to make proteins", "So it can be pulled apart by spindle fibres", "Because the cell has no nucleus"], answer: 1,
+        explain: "Uncoiled chromatin lets the cell read its genes. DNA only coils tightly into chromosomes when the cell is about to divide, so it can be moved without tangling." },
+      { type: "info", exam: "<b>In criterion A this becomes:</b> “<b>Distinguish</b> between chromatin and chromosomes [2]”. Give one difference in structure (relaxed vs tightly coiled) and one in when you see it (interphase vs division)." },
+
+      /* ---------- Mission 3: the cell cycle ---------- */
+      { type: "info", mission: { n: 3, title: "The cell cycle", lesson: "Lesson 1 · G1, S, G2, M and the checkpoints",
+        story: "Before a cell divides it must grow, copy every chromosome perfectly and pass two safety checks. Become the checkpoint guard." } },
+      { type: "info", sim: { name: "cycleSim", title: "The cell cycle and the checkpoint guard" } },
+      { type: "info", flash: [
+        { q: "Name the 4 phases of the cell cycle in order.", a: "G1 → S → G2 → M (mitosis and cytokinesis)." },
+        { q: "What happens in G1?", a: "The cell grows, makes more organelles and does its normal job (about 10 h)." },
+        { q: "What happens in S phase?", a: "The DNA is copied (synthesis). Each chromosome becomes two sister chromatids (about 8 h)." },
+        { q: "What happens in G2?", a: "The cell grows a little more and makes the proteins and organelles needed to divide (about 4 h)." },
+        { q: "What is interphase, and how long is it?", a: "G1 + S + G2: about 90% of the cell cycle." },
+        { q: "What does the G1 checkpoint check?", a: "Is the cell big enough? Enough nutrients? A signal to divide? Is the DNA undamaged?" },
+        { q: "What does the G2 checkpoint check?", a: "That all the DNA has been copied, and that the copied DNA is undamaged." },
+        { q: "What is G0?", a: "A resting phase: the cell leaves the cycle and stops dividing, e.g. most nerve cells." },
+        { q: "What can happen if checkpoints fail?", a: "Cells with damaged DNA keep dividing out of control and form a tumour (cancer)." }
+      ] },
+      { id: "w4r5", type: "match", marks: 4,
+        prompt: "<b>Identify</b> the phase in which each event happens.",
+        head: ["Event", "Phase"],
+        options: ["G1", "S", "G2", "M"],
+        rows: [
+          { label: "The DNA is copied", answer: "S" },
+          { label: "The cell grows and makes new organelles", answer: "G1" },
+          { label: "The cell makes the proteins it needs to divide", answer: "G2" },
+          { label: "The nucleus and then the cytoplasm divide", answer: "M" }
+        ] },
+      { id: "w4r6", type: "cloze", marks: 4,
+        prompt: "Complete the sentences about the checkpoints.",
+        text: "At the [[0]] checkpoint the cell checks it is big enough, has nutrients and a signal to divide, and that its DNA is undamaged. At the [[1]] checkpoint it checks that all the DNA has been [[2]]. A cell that does not get a signal to divide enters [[3]], a resting phase.",
+        options: ["G1", "G2", "S", "copied", "destroyed", "G0", "mitosis"],
+        blanks: ["G1", "G2", "copied", "G0"] },
+      { type: "info", exam: "<b>In criterion A this becomes:</b> “<b>Outline</b> the stages of the cell cycle [4]” and “<b>Explain</b> what could happen if a checkpoint failed [3]”." },
+
+      /* ---------- Mission 4: mitosis ---------- */
+      { type: "info", mission: { n: 4, title: "Please Make Another Twin", lesson: "Lesson 1 · The stages of mitosis",
+        story: "Mitosis makes two cells that are genetically identical to the parent cell. Learn the stages until you can spot them in any drawing or micrograph." } },
+      { type: "info", sim: { name: "mitosisSim", title: "Order the stages, then name that stage" } },
+      { type: "info", flash: [
+        { q: "What does mitosis make?", a: "Two daughter cells that are genetically identical to the parent cell, each with 46 chromosomes in humans." },
+        { q: "Memory trick for the order of mitosis?", a: "Please Make Another Twin: Prophase, Metaphase, Anaphase, Telophase. Then cytokinesis." },
+        { q: "Prophase?", a: "DNA coils into X-shaped chromosomes; the nuclear envelope breaks down; centrioles move to opposite ends; spindle fibres form." },
+        { q: "Metaphase?", a: "Chromosomes line up across the middle (the equator); spindle fibres attach to each centromere." },
+        { q: "Anaphase?", a: "Spindle fibres shorten and pull the sister chromatids apart to opposite ends (poles)." },
+        { q: "Telophase?", a: "A new nuclear envelope forms at each end; the chromosomes uncoil; the cell starts to pinch in." },
+        { q: "Cytokinesis?", a: "The cytoplasm divides, making two separate, identical daughter cells." },
+        { q: "Why are the daughter cells identical?", a: "The DNA was copied exactly in S phase, and each daughter cell receives one sister chromatid of every chromosome." }
+      ] },
+      { id: "w4r7", type: "match", marks: 5,
+        prompt: "Match each stage to what happens.",
+        head: ["Stage", "What happens"],
+        options: ["chromosomes become visible and the nuclear envelope breaks down", "chromosomes line up across the middle of the cell", "sister chromatids are pulled to opposite ends", "new nuclear envelopes form and chromosomes uncoil", "the cytoplasm divides into two cells"],
+        rows: [
+          { label: "Prophase", answer: "chromosomes become visible and the nuclear envelope breaks down" },
+          { label: "Metaphase", answer: "chromosomes line up across the middle of the cell" },
+          { label: "Anaphase", answer: "sister chromatids are pulled to opposite ends" },
+          { label: "Telophase", answer: "new nuclear envelopes form and chromosomes uncoil" },
+          { label: "Cytokinesis", answer: "the cytoplasm divides into two cells" }
+        ] },
+      { id: "w4r8", type: "mcq", marks: 1,
+        prompt: "Which stage is shown?<div class='stagerow'>" + window.cellSVG("metaphase", { size: 150, name: "A dividing cell" }) + "</div>",
+        options: ["Prophase", "Metaphase", "Anaphase", "Telophase"], answer: 1,
+        explain: "The chromosomes are lined up across the middle (equator) of the cell, with spindle fibres attached to each centromere: metaphase." },
+      { type: "info", exam: "<b>In criterion A this becomes:</b> “<b>Identify</b> the stages A–E in the drawing [5]” and “<b>Describe</b> what happens during mitosis [4]”. Give one visible feature for each stage." }
+    ]
+  },
+  {
+    crit: "A", name: "Knowing and understanding: the cell cycle and mitosis",
+    tests: "Exam-style criterion A questions on why cells divide, DNA packing, the cell cycle, mitosis and micrographs.",
+    tip: "Use the key words: sister chromatids, centromere, spindle fibres, equator, poles, nuclear envelope. One clear point per mark.",
+    items: [
+      { type: "info", html: "<p>This task covers Unit 2, Lesson 1. Use the key words from the flip cards in every answer. The number in brackets shows how many points you need.</p>" },
+
+      { id: "w4a1", type: "mcq", marks: 1,
+        prompt: "<b>State</b> the phase of the cell cycle in which DNA is copied.",
+        options: ["G1", "S", "G2", "M"], answer: 1,
+        explain: "S stands for synthesis: the DNA is copied, so each chromosome becomes two sister chromatids." },
+
+      { id: "w4a2", type: "match", marks: 6,
+        prompt: "The diagram shows the cell cycle. <b>Identify</b> phases A–D and checkpoints X and Y.<div class='stagerow'>" + window.cycleSVG({ size: 240 }) + "</div>",
+        head: ["Label", "Name"],
+        options: ["G1", "S", "G2", "M (mitosis and cytokinesis)", "G1 checkpoint", "G2 checkpoint"],
+        rows: [
+          { label: "A", answer: "G1" },
+          { label: "B", answer: "S" },
+          { label: "C", answer: "G2" },
+          { label: "D", answer: "M (mitosis and cytokinesis)" },
+          { label: "X", answer: "G1 checkpoint" },
+          { label: "Y", answer: "G2 checkpoint" }
+        ] },
+
+      { id: "w4a3", type: "text", marks: 3, minWords: 35,
+        prompt: "<b>Explain</b> why a cell divides into two instead of continuing to grow larger.",
+        hint: "As a cell grows, its volume increases … than its surface area, so the SA : V ratio … . This means substances cannot … through the membrane fast enough, and the centre is … . Dividing into two smaller cells … .",
+        model: "As a cell grows, its volume increases faster than its surface area, so its surface area to volume ratio gets smaller (1). The membrane is then too small for the volume: food and oxygen cannot diffuse in, and waste cannot diffuse out, fast enough, and the centre of the cell is too far from the surface (1). Dividing into two smaller cells gives each one a larger SA : V ratio, so exchange is fast enough again (1).",
+        points: ["Volume increases faster than SA → SA : V ratio decreases", "Diffusion in/out too slow / centre too far from the surface", "Two smaller cells have a larger SA : V ratio"] },
+
+      { id: "w4a4", type: "text", marks: 2, minWords: 25,
+        prompt: "<b>Distinguish</b> between chromatin and chromosomes.",
+        hint: "Chromatin is … DNA, seen during … , whereas chromosomes are … DNA, seen when … .",
+        model: "Chromatin is relaxed, uncoiled DNA wrapped around proteins, whereas a chromosome is DNA that is tightly coiled (1). Chromatin is found during interphase, so genes can be read, whereas chromosomes are only visible when the cell is dividing (1).",
+        points: ["Relaxed/uncoiled vs tightly coiled", "Interphase vs visible during division"] },
+
+      { id: "w4a5", type: "text", marks: 4, minWords: 50,
+        prompt: "<b>Outline</b> what happens in each of the four phases of the cell cycle: G1, S, G2 and M.",
+        hint: "In G1, the cell … . In S, the cell … , so each chromosome … . In G2, … . In M, … , then … .",
+        model: "G1: the cell grows, makes more organelles and carries out its normal job (1). S: the cell copies all its DNA, so each chromosome becomes two identical sister chromatids (1). G2: the cell grows a little more and makes the proteins and organelles needed for division (1). M: the nucleus divides by mitosis, then the cytoplasm divides (cytokinesis), producing two identical daughter cells (1).",
+        points: ["G1: growth, organelles, normal function", "S: DNA copied → sister chromatids", "G2: further growth, proteins for division", "M: mitosis then cytokinesis → two identical cells"] },
+
+      { id: "w4a6", type: "match", marks: 5,
+        prompt: "The drawings show cells at different stages of division. <b>Identify</b> the stage of each cell A–E.<div class='stagerow'>"
+          + window.cellSVG("anaphase", { size: 120, label: "A" }) + window.cellSVG("prophase", { size: 120, label: "B" }) + window.cellSVG("cytokinesis", { size: 120, label: "C" }) + window.cellSVG("metaphase", { size: 120, label: "D" }) + window.cellSVG("telophase", { size: 120, label: "E" }) + "</div>",
+        head: ["Cell", "Stage"],
+        options: ["prophase", "metaphase", "anaphase", "telophase", "cytokinesis", "interphase"],
+        rows: [
+          { label: "A", answer: "anaphase" },
+          { label: "B", answer: "prophase" },
+          { label: "C", answer: "cytokinesis" },
+          { label: "D", answer: "metaphase" },
+          { label: "E", answer: "telophase" }
+        ] },
+
+      { id: "w4a7", type: "text", marks: 4, minWords: 50,
+        prompt: "<b>Describe</b> what happens to the chromosomes during prophase, metaphase, anaphase and telophase.",
+        hint: "Prophase: the DNA … into … chromosomes and the nuclear envelope … . Metaphase: chromosomes line up … and spindle fibres … . Anaphase: … . Telophase: … .",
+        model: "Prophase: the DNA coils up into X-shaped chromosomes, the nuclear envelope breaks down and spindle fibres form (1). Metaphase: the chromosomes line up across the middle (equator) of the cell, with spindle fibres attached to each centromere (1). Anaphase: the spindle fibres pull the sister chromatids apart to opposite ends (poles) of the cell (1). Telophase: a new nuclear envelope forms around each set of chromosomes, and the chromosomes uncoil (1).",
+        points: ["Prophase: chromosomes condense / nuclear envelope breaks down", "Metaphase: line up at the equator, spindle attached to centromeres", "Anaphase: sister chromatids pulled to opposite poles", "Telophase: new nuclear envelopes, chromosomes uncoil"] },
+
+      { id: "w4a8", type: "text", marks: 3, minWords: 35,
+        prompt: "A human skin cell divides by mitosis. <b>Explain</b> why each daughter cell has 46 chromosomes and exactly the same DNA as the parent cell.",
+        hint: "In S phase, … . This makes two identical … joined at the … . In anaphase, … , so each daughter cell receives … .",
+        model: "In S phase, every one of the 46 chromosomes is copied exactly, so each chromosome is made of two identical sister chromatids joined at the centromere (1). In anaphase, the spindle fibres pull the sister chromatids of every chromosome to opposite poles (1). So each daughter cell receives one copy of each of the 46 chromosomes, identical to the parent cell's DNA (1).",
+        points: ["DNA copied exactly in S phase → sister chromatids", "Sister chromatids separated to opposite poles in anaphase", "Each daughter cell gets one copy of all 46 → identical"] },
+
+      { id: "w4a9", type: "text", marks: 3, minWords: 35,
+        prompt: "UV light from the sun can damage the DNA in skin cells. <b>Explain</b> what could happen if the G1 checkpoint failed to detect this damage.",
+        hint: "Normally the G1 checkpoint … . If it fails, the damaged DNA is … in S phase and passed on to … . These cells may keep dividing … , forming … .",
+        model: "Normally the G1 checkpoint stops a cell with damaged DNA so it can be repaired before the DNA is copied (1). If the checkpoint fails, the damaged DNA is copied in S phase and passed on to every daughter cell (1). These cells may divide out of control and form a tumour, which can lead to skin cancer (1).",
+        points: ["G1 checkpoint normally stops cells with damaged DNA", "Damaged DNA copied and passed to daughter cells", "Uncontrolled division → tumour / cancer"] },
+
+      { id: "w4a10", type: "numtable", marks: 3,
+        prompt: "A student counted the cells in a micrograph of an onion root tip.<div class='tbl'><table><thead><tr><th>Stage</th><th>Interphase</th><th>Prophase</th><th>Metaphase</th><th>Anaphase</th><th>Telophase</th><th>Total</th></tr></thead><tbody><tr><td>Number of cells</td><td>40</td><td>5</td><td>2</td><td>2</td><td>1</td><td>50</td></tr></tbody></table></div>One cell cycle takes <b>24 hours</b>. <b>Calculate</b>:",
+        howto: "Mitotic index = cells in mitosis ÷ total cells. Time in a stage = (cells in that stage ÷ total cells) × 24 h. Type numbers only.",
+        head: ["Value", "Answer"],
+        rows: [
+          { label: "Mitotic index (as a decimal)", answer: 0.2, tol: 0.005, hint: "(5 + 2 + 2 + 1) ÷ 50" },
+          { label: "Time spent in interphase (h)", answer: 19.2, tol: 0.05, hint: "40 ÷ 50 × 24" },
+          { label: "Time spent in prophase (h)", answer: 2.4, tol: 0.05, hint: "5 ÷ 50 × 24" }
+        ] },
+
+      { id: "w4a11", type: "text", marks: 2, minWords: 25,
+        prompt: "<b>Suggest</b> why most of the cells in the micrograph were in interphase.",
+        hint: "Interphase is the … part of the cell cycle (about …%), so at any moment … .",
+        model: "Interphase is the longest part of the cell cycle, about 90% of it (G1 + S + G2) (1). So at any moment, most cells are in interphase, growing and copying their DNA, and only a few are in the middle of dividing (1).",
+        points: ["Interphase is the longest phase (~90%)", "So most cells are in it at any one time"] }
     ]
   }
   ]

@@ -565,5 +565,114 @@
     };
   };
 
+  /* =============== Cell cycle wheel + checkpoint guard =============== */
+  SIMS.cycleSim = (root, api) => {
+    const st = api.store; st.open = st.open || []; st.guard = st.guard || {};
+    const PH = {
+      G1: { n: "G1 (first growth)", t: "about 10 hours", d: "The cell <b>grows</b>, makes more organelles and does its normal job." },
+      S: { n: "S (synthesis)", t: "about 8 hours", d: "The cell <b>copies all its DNA</b>. Each chromosome becomes two identical <b>sister chromatids</b>." },
+      G2: { n: "G2 (second growth)", t: "about 4 hours", d: "The cell grows a little more and makes the <b>proteins and organelles needed to divide</b>." },
+      M: { n: "M (mitosis + cytokinesis)", t: "about 1–2 hours", d: "The <b>nucleus divides</b> (mitosis), then the <b>cytoplasm divides</b> (cytokinesis), making two identical daughter cells." }
+    };
+    const wheel = h("div", { class: "cyclewrap", html: window.cycleSVG({ segs: [["G1", 0, 160, "#8fc1e3", 17], ["S", 160, 280, "#a8d5a2", 17], ["G2", 280, 330, "#f2c98a", 14], ["M", 330, 360, "#e59a9a", 14]], checks: [["1", 160], ["2", 330]], center: "tap a phase", name: "Cell cycle wheel: G1, S, G2 and M, with the G1 and G2 checkpoints" }) });
+    const btns = h("div", { class: "simtabs" });
+    const info = h("div", { class: "simpanel", "aria-live": "polite" }, "Tap a phase on the wheel or below. Interphase = G1 + S + G2 (about 90% of the cycle).");
+    Object.keys(PH).forEach(k => btns.append(h("button", { type: "button", class: "simtab", "data-k": k, onclick: () => show(k) }, k)));
+    const segs = () => [...wheel.querySelectorAll("path")].slice(0, 4);
+    segs().forEach((p, i) => { const k = Object.keys(PH)[i]; p.style.cursor = "pointer"; p.setAttribute("tabindex", "0"); p.addEventListener("click", () => show(k)); p.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(k); } }); });
+    function show(k) {
+      if (!st.open.includes(k)) st.open.push(k);
+      info.innerHTML = `<b>${PH[k].n}</b> · ${PH[k].t}<br>${PH[k].d}`;
+      [...btns.children].forEach(b => b.setAttribute("aria-selected", b.dataset.k === k));
+      segs().forEach((p, i) => p.style.opacity = Object.keys(PH)[i] === k ? "1" : ".55");
+      api.save(); check();
+    }
+    const CARDS = [
+      { g: "G1 checkpoint", t: "The cell is big enough, has plenty of nutrients, has received a signal to divide, and its DNA is undamaged.", ok: true, why: "Every check is passed, so the cell can go on to copy its DNA in S phase." },
+      { g: "G1 checkpoint", t: "A skin cell's DNA has been damaged by UV light from the sun.", ok: false, why: "Damaged DNA must not be copied. The cell stops and tries to repair it, or it destroys itself." },
+      { g: "G2 checkpoint", t: "Only half of the DNA has been copied so far.", ok: false, why: "Each daughter cell needs a complete copy, so copying must finish before mitosis can start." },
+      { g: "G2 checkpoint", t: "All of the DNA has been copied and none of it is damaged.", ok: true, why: "The cell is ready, so it can enter mitosis." },
+      { g: "G1 checkpoint", t: "The cell is still very small and is short of nutrients.", ok: false, why: "The cell must grow and gather resources before it commits to dividing." },
+      { g: "G1 checkpoint", t: "A fully specialised nerve cell. No signal to divide arrives.", ok: false, why: "With no signal, the cell leaves the cycle and enters G0, a resting phase. Most nerve cells stay in G0." }
+    ];
+    const guard = h("div", { class: "guard" });
+    const gmsg = h("div", { class: "simpanel", "aria-live": "polite" });
+    root.append(h("p", { class: "simhelp", html: "<b>Part 1.</b> Explore the cell cycle. <b>Part 2.</b> You are the checkpoint guard: decide whether each cell may <b>pass</b> or must <b>stop</b>." }), wheel, btns, info,
+      h("h4", { class: "simh" }, "Checkpoint guard"), guard, gmsg);
+    const mark = tasks(root, ["Open all four phases of the cycle", "Make the right decision for all 6 cells at the checkpoints"]);
+    function drawGuard() {
+      guard.innerHTML = "";
+      CARDS.forEach((c, i) => {
+        const res = st.guard[i];
+        const card = h("div", { class: "gcard" + (res === true ? " right" : res === false ? " wrong" : "") },
+          h("div", { class: "gtag" }, c.g), h("p", null, c.t),
+          h("div", { class: "simacts" },
+            h("button", { type: "button", class: "btn alt", onclick: () => decide(i, true) }, "✓ Pass"),
+            h("button", { type: "button", class: "btn alt", onclick: () => decide(i, false) }, "✋ Stop")));
+        guard.append(card);
+      });
+    }
+    function decide(i, pass) {
+      const c = CARDS[i], right = pass === c.ok;
+      st.guard[i] = right; api.save();
+      gmsg.innerHTML = (right ? "<span class='good'>✓ Correct.</span> " : "<span class='bad'>✗ Not quite.</span> ") + c.why + (right ? "" : " Try that card again.");
+      drawGuard(); check();
+    }
+    function check() {
+      const a = st.open.length >= 4, b = CARDS.every((_, i) => st.guard[i] === true);
+      mark(0, a); mark(1, b); if (a && b) api.done();
+    }
+    drawGuard(); check();
+  };
+
+  /* =============== Mitosis: order the stages + name that stage =============== */
+  SIMS.mitosisSim = (root, api) => {
+    const st = api.store; st.seq = st.seq || []; st.streak = st.streak || 0; st.best = st.best || 0;
+    const ORDER = ["prophase", "metaphase", "anaphase", "telophase", "cytokinesis"];
+    const NAME = { interphase: "Interphase", prophase: "Prophase", metaphase: "Metaphase", anaphase: "Anaphase", telophase: "Telophase", cytokinesis: "Cytokinesis" };
+    const CLUE = {
+      interphase: "a nucleus with thin, uncoiled chromatin: no chromosomes visible",
+      prophase: "X-shaped chromosomes appear, the nuclear envelope breaks down and spindle fibres start to form",
+      metaphase: "chromosomes lined up across the middle (equator), with spindle fibres attached to each centromere",
+      anaphase: "sister chromatids pulled apart to opposite ends (poles), still one cell",
+      telophase: "a new nucleus forming at each end and the cell starting to pinch in",
+      cytokinesis: "the cytoplasm has split: two separate, identical daughter cells"
+    };
+    root.append(h("p", { class: "simhelp", html: "Remember the order with <b>P</b>lease <b>M</b>ake <b>A</b>nother <b>T</b>win: <b>P</b>rophase, <b>M</b>etaphase, <b>A</b>naphase, <b>T</b>elophase, then cytokinesis.<br><b>Part 1.</b> Tap the cells in the right order." }));
+    const seqRow = h("div", { class: "mseq" });
+    const pool = h("div", { class: "mpool" });
+    const omsg = h("div", { class: "simpanel", "aria-live": "polite" });
+    const shuffled = st.shuf || (st.shuf = shuffle(ORDER));
+    root.append(seqRow, pool, omsg);
+    function drawOrder() {
+      seqRow.innerHTML = ""; pool.innerHTML = "";
+      ORDER.forEach((k, i) => seqRow.append(h("div", { class: "mslot" + (st.seq[i] ? " on" : "") }, st.seq[i] ? h("span", { html: window.cellSVG(k, { size: 80, name: NAME[k] }) }) : h("span", { class: "note" }, String(i + 1)), st.seq[i] ? h("small", null, NAME[k]) : null)));
+      shuffled.filter(k => !st.seq.includes(k)).forEach(k => pool.append(h("button", { type: "button", class: "mcard", "aria-label": "Unnamed cell drawing", onclick: () => pick(k), html: window.cellSVG(k, { size: 96, name: "Unnamed stage" }) })));
+    }
+    function pick(k) {
+      const want = ORDER[st.seq.length];
+      if (k === want) { st.seq.push(k); omsg.innerHTML = `<span class='good'>✓ ${NAME[k]}.</span> Look for ${CLUE[k]}.`; }
+      else omsg.innerHTML = `<span class='bad'>✗ Not next.</span> Stage ${st.seq.length + 1} is the one with ${CLUE[want]}.`;
+      api.save(); drawOrder(); check();
+    }
+    const quiz = h("div", { class: "mquiz" });
+    const qmsg = h("div", { class: "simpanel", "aria-live": "polite" });
+    root.append(h("h4", { class: "simh" }, "Part 2. Name that stage"), h("p", { class: "simhelp" }, "Get 5 right in a row. A wrong answer resets your streak."), quiz, qmsg);
+    const mark = tasks(root, ["Put all five stages in the right order", "Name 5 stages correctly in a row"]);
+    let cur = null;
+    function nextQ() {
+      const ks = Object.keys(NAME); let k; do { k = ks[Math.floor(Math.random() * ks.length)]; } while (k === cur && ks.length > 1); cur = k;
+      quiz.innerHTML = "";
+      quiz.append(h("div", { class: "mqimg", html: window.cellSVG(k, { size: 150, name: "Which stage is this?" }) }), h("div", { class: "simacts" }, ...ks.map(n => h("button", { type: "button", class: "btn alt", onclick: () => answer(n) }, NAME[n]))), h("div", { class: "note" }, st.best >= 5 ? `✓ Done: ${st.best} in a row. Keep practising if you like.` : `Streak: ${st.streak} / 5`));
+    }
+    function answer(n) {
+      if (n === cur) { st.streak++; st.best = Math.max(st.best, st.streak); qmsg.innerHTML = `<span class='good'>✓ ${NAME[cur]}.</span> Clue: ${CLUE[cur]}.`; }
+      else { qmsg.innerHTML = `<span class='bad'>✗ That was ${NAME[cur]}.</span> Clue: ${CLUE[cur]}. Streak reset.`; st.streak = 0; }
+      api.save(); check(); nextQ();
+    }
+    function check() { const a = st.seq.length === 5, b = st.best >= 5; mark(0, a); mark(1, b); if (a && b) api.done(); }
+    drawOrder(); nextQ(); check();
+  };
+
   window.SIMS = SIMS;
 })();
